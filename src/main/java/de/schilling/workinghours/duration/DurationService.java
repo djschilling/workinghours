@@ -1,8 +1,10 @@
-package de.schilling.workinghours.hours;
+package de.schilling.workinghours.duration;
 
 import de.schilling.workinghours.user.User;
 import de.schilling.workinghours.user.UserService;
 import java.util.List;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +39,10 @@ public class DurationService {
 
     public List<Duration> getAllForUser(String username) {
         return durationRepository.findByUsername(username);
+    }
+
+    public long calculateDurationSum(List<Duration> durationList) {
+
+        return durationList.stream().mapToLong(d->d.getDuration()).sum();
     }
 }

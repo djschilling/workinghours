@@ -1,4 +1,4 @@
-package de.schilling.workinghours.hours;
+package de.schilling.workinghours.duration;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
