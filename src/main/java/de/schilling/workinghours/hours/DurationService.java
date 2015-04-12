@@ -26,15 +26,10 @@ public class DurationService {
         return durationRepository.save(duration);
     }
 
-    public List<Duration> getAll() {
-
-        return durationRepository.findAll();
-    }
-
     public List<Duration> getAllForCurrentUser() {
 
         User user = userService.getCurrentlyLoggedIn();
-        if(user.getRole().equals("admin")) {
+        if (user.getRole().equals("admin")) {
             return durationRepository.findAll();
         }
         return durationRepository.findByUsername(user.getUsername());
