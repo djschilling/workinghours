@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,6 +38,7 @@ public class DurationService {
         return durationRepository.findByUsername(user.getUsername());
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Duration> getAllForUser(String username) {
         return durationRepository.findByUsername(username);
     }

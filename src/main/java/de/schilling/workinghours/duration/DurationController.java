@@ -1,14 +1,10 @@
 package de.schilling.workinghours.duration;
 
-import java.util.List;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * David Schilling - davejs92@gmail.com
@@ -39,8 +35,18 @@ public class DurationController {
         return durationService.getAllForCurrentUser();
     }
 
-    @RequestMapping(value = "durations", method = RequestMethod.GET, params = { "username"})
-    public List<Duration> getAllForUsername(@RequestParam(value="username") String username) {
+    @RequestMapping(value = "durations", method = RequestMethod.GET, params = {"username"})
+    public List<Duration> getAllForUsername(@RequestParam(value = "username") String username) {
         return durationService.getAllForUser(username);
+    }
+
+    @RequestMapping(value = "durations/sum", method = RequestMethod.GET)
+    public Long getSumForCurrentUser() {
+        return durationService.calculateDurationSum(durationService.getAllForCurrentUser());
+    }
+
+    @RequestMapping(value = "durations/sum", method = RequestMethod.GET, params = {"username"})
+    public Long getSumForUsername(@RequestParam(value = "username") String username) {
+        return durationService.calculateDurationSum(durationService.getAllForUser(username));
     }
 }
