@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -35,6 +36,11 @@ public class DurationController {
 
     @RequestMapping(value = "durations", method = RequestMethod.GET)
     public List<Duration> getAll() {
-        return durationService.getAll();
+        return durationService.getAllForCurrentUser();
+    }
+
+    @RequestMapping(value = "durations", method = RequestMethod.GET, params = { "username"})
+    public List<Duration> getAllForUsername(@RequestParam(value="username") String username) {
+        return durationService.getAllForUser(username);
     }
 }

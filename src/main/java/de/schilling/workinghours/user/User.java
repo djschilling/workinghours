@@ -19,19 +19,25 @@ public class User implements UserDetails {
 
     private String password;
 
+    private String role;
+
     public User() {
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
         return grantedAuthorities;
     }
 
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     @Override

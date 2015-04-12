@@ -19,11 +19,12 @@ public class Duration {
     @NotNull
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private String username;
 
     public Duration() {
     }
 
-    public Duration(LocalDateTime startTime, LocalDateTime endTime) {
+    public Duration(LocalDateTime startTime, LocalDateTime endTime, String username) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -49,5 +50,13 @@ public class Duration {
             return java.time.Duration.between(startTime, endTime).toMinutes();
         }
         return 0;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
