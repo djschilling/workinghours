@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * David Schilling - davejs92@gmail.com
  */
@@ -28,5 +30,13 @@ public class UserService implements UserDetailsService {
     public User getCurrentlyLoggedIn() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+    }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    public List<User> getAllUsers() {
+         return userRepository.findAll();
     }
 }
