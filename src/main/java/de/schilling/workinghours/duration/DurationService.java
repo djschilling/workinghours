@@ -2,6 +2,11 @@ package de.schilling.workinghours.duration;
 
 import de.schilling.workinghours.user.User;
 import de.schilling.workinghours.user.UserService;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -29,18 +34,64 @@ public class DurationService {
         return durationRepository.save(duration);
     }
 
-    public List<Duration> getAllForCurrentUser() {
-
+    public List<Duration> getTimefilteredForCurrentUser(String from, String to) {
+        LocalDateTime startDateTime = parseStartDate(from);
+        LocalDateTime endDateTime = parseEndDate(to);
         User user = userService.getCurrentlyLoggedIn();
         if (user.getRole().equals("admin")) {
-            return durationRepository.findAll();
+            return filterBefore(filterAfter(durationRepository.findAll(), startDateTime), endDateTime);
         }
-        return durationRepository.findByUsername(user.getUsername());
+        return filterBefore(filterAfter(durationRepository.findByUsername(user.getUsername()), startDateTime), endDateTime);
+    }
+
+    private LocalDateTime parseEndDate(String to) {
+        if(to == null) {
+            return LocalDateTime.of(LocalDate.MAX, LocalTime.MAX);
+        } else {
+            return LocalDateTime.of(LocalDate.parse(to), LocalTime.MAX);
+        }
+    }
+
+    private LocalDateTime parseStartDate(String from) {
+        if(from == null) {
+            return LocalDateTime.of(LocalDate.MIN, LocalTime.MIN);
+        } else {
+            return LocalDateTime.of(LocalDate.parse(from), LocalTime.MIN);
+        }
+    }
+
+    private List<Duration> filterBefore(List<Duration> all, LocalDateTime endDateTime) {
+        List<Duration> before = new ArrayList<>();
+        for(Duration currentDuration : all) {
+            if(currentDuration.getStartTime() != null) {
+                if (currentDuration.getStartTime().isBefore(endDateTime)) {
+                    before.add(currentDuration);
+                }
+            } else {
+                before.add(currentDuration);
+            }
+        }
+        return before;    }
+
+    private List<Duration> filterAfter(List<Duration> all, LocalDateTime startDateTime) {
+        List<Duration> after = new ArrayList<>();
+        for(Duration currentDuration : all) {
+            if(currentDuration.getStartTime() != null) {
+                if (currentDuration.getStartTime().isAfter(startDateTime)) {
+                    after.add(currentDuration);
+                }
+            } else {
+                after.add(currentDuration);
+            }
+        }
+        return after;
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<Duration> getAllForUser(String username) {
-        return durationRepository.findByUsername(username);
+    public List<Duration> getTimefilteredForUser(String username, String from, String to) {
+        LocalDateTime startDateTime = parseStartDate(from);
+        LocalDateTime endDateTime = parseEndDate(to);
+        return filterBefore(filterAfter(durationRepository.findByUsername(username), startDateTime), endDateTime);
     }
 
     public long calculateDurationSum(List<Duration> durationList) {

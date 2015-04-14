@@ -31,22 +31,31 @@ public class DurationController {
     }
 
     @RequestMapping(value = "durations", method = RequestMethod.GET)
-    public List<Duration> getAll() {
-        return durationService.getAllForCurrentUser();
+    public List<Duration> getAll(@RequestParam(value = "start", required = false) String start,
+                                 @RequestParam(value = "end", required = false) String end) {
+        List<Duration> list = durationService.getTimefilteredForCurrentUser(start, end);
+        return list;
     }
 
     @RequestMapping(value = "durations", method = RequestMethod.GET, params = {"username"})
-    public List<Duration> getAllForUsername(@RequestParam(value = "username") String username) {
-        return durationService.getAllForUser(username);
+    public List<Duration> getAllForUsername(@RequestParam(value = "username") String username,
+                                            @RequestParam(value = "start", required = false) String start,
+                                            @RequestParam(value = "end", required = false) String end
+    ) {
+        return durationService.getTimefilteredForUser(username, start, end);
     }
 
     @RequestMapping(value = "durations/sum", method = RequestMethod.GET)
-    public Long getSumForCurrentUser() {
-        return durationService.calculateDurationSum(durationService.getAllForCurrentUser());
+    public Long getSumForCurrentUser(@RequestParam(value = "start", required = false) String start,
+                                     @RequestParam(value = "end", required = false) String end) {
+        return durationService.calculateDurationSum(durationService.getTimefilteredForCurrentUser(start, end));
     }
 
     @RequestMapping(value = "durations/sum", method = RequestMethod.GET, params = {"username"})
-    public Long getSumForUsername(@RequestParam(value = "username") String username) {
-        return durationService.calculateDurationSum(durationService.getAllForUser(username));
+    public Long getSumForUsername(@RequestParam(value = "username") String username,
+                                  @RequestParam(value = "start", required = false) String start,
+                                  @RequestParam(value = "end", required = false) String end) {
+        return durationService.calculateDurationSum(durationService.getTimefilteredForUser(username,start, end));
     }
+
 }
