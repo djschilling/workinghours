@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 /**
- * Created by raphael on 12.04.15.
+ * @author Raphael Schilling
+ * @author David Schilling - davejs92@gmail.com
  */
 @RestController
 public class UserController {
@@ -24,11 +27,20 @@ public class UserController {
 
     @RequestMapping(value = "users", method = RequestMethod.POST)
     public User save(@RequestBody @Valid User user) {
+
         return userService.save(user);
     }
 
-    @RequestMapping(value = "users", method = RequestMethod.GET)
-    public List<User> getAll() { return userService.getAllUsers();
+    @RequestMapping(value = "users", method = GET)
+    public List<User> getAll() {
+
+        return userService.getAllUsers();
+    }
+
+    @RequestMapping(value = "whoami", method = GET)
+    public User whoami() {
+
+        return userService.getCurrentlyLoggedIn();
     }
 
 

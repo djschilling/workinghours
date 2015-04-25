@@ -10,12 +10,16 @@
     }
 
 
-    controllersModul.controller('NavBarController', [function () {
+    controllersModul.controller('NavBarController', ['userFactory', '$scope', function (userFactory, $scope) {
         var navBar = $('#navbar');
         navBar.find('a').click(function () {
             if (navBar.hasClass('in')) {
                 navBar.collapse('toggle');
             }
+        });
+
+        userFactory.getCurrentUser(function (user) {
+            $scope.user = user;
         });
     }]);
 }());

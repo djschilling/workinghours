@@ -8,7 +8,9 @@
     controllersModul = angular.module('dcc.controller', []);
   }
 
-  controllersModul.controller('DurationController', ['$scope', function ($scope) {
-    $scope.foo = "bar";
+  controllersModul.controller('OverviewController', ['$scope', 'durationFactory', function ($scope, durationFactory) {
+      durationFactory.getSum(function (sum) {
+          $scope.sum = sum;
+      });
   }]);
 }());
