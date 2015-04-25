@@ -16,10 +16,12 @@ import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DurationServiceImplTest {
+
     @Mock
     private DurationRepository durationRepositoryMock;
     @Mock
     private UserService userServiceMock;
+
     private DurationServiceImpl sut;
 
     @Before

@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 import static java.util.Collections.unmodifiableList;
 
 /**
@@ -27,16 +29,22 @@ public class DurationServiceImpl implements DurationService {
 
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public List<Duration> get() {
+    public List<Duration> get(Integer year, Integer month) {
 
-        return unmodifiableList(durationRepository.findAll());
+        LocalDateTime from = calculateStartOfMonth(year, month);
+        LocalDateTime to = from.plusMonths(1).minusNanos(1);
+
+        return unmodifiableList(durationRepository.findByStartTimeBetween(from, to));
     }
 
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN') or #username == principal.username")
-    public List<Duration> get(String username) {
+    public List<Duration> get(String username, Integer year, Integer month) {
 
-        return unmodifiableList(durationRepository.findByUsername(username));
+        LocalDateTime from = calculateStartOfMonth(year, month);
+        LocalDateTime to = from.plusMonths(1).minusNanos(1);
+
+        return unmodifiableList(durationRepository.findByUsernameAndStartTimeBetween(username, from, to));
     }
 
     @Override
@@ -51,5 +59,16 @@ public class DurationServiceImpl implements DurationService {
 
         duration.setUsername(userService.getCurrentlyLoggedIn().getUsername());
         return durationRepository.save(duration);
+    }
+
+    private LocalDateTime calculateStartOfMonth(Integer year, Integer month) {
+        LocalDateTime startOfMonth;
+        if(year != null && month != null) {
+            startOfMonth = LocalDateTime.of(year, month, 1, 0, 0);
+        } else {
+            LocalDateTime now = LocalDateTime.now();
+            startOfMonth = LocalDateTime.of(now.getYear(), now.getMonth(), 1, 0, 0);
+        }
+        return startOfMonth;
     }
 }

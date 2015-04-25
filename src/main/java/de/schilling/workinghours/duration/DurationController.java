@@ -31,26 +31,32 @@ public class DurationController {
     }
 
     @RequestMapping(value = "durations", method = RequestMethod.GET)
-    public List<Duration> getAll() {
+    public List<Duration> getAll(@RequestParam(required = false) Integer year,
+                                 @RequestParam(required = false) Integer month) {
 
-        return durationService.get();
+        return durationService.get(year, month);
     }
 
     @RequestMapping(value = "durations", method = RequestMethod.GET, params = {"username"})
-    public List<Duration> getAllForUsername(@RequestParam(value = "username") String username) {
+    public List<Duration> getAllForUsername(@RequestParam(value = "username") String username,
+                                            @RequestParam(required = false) Integer year,
+                                            @RequestParam(required = false) Integer month) {
 
-        return durationService.get(username);
+        return durationService.get(username, year, month);
     }
 
     @RequestMapping(value = "durations/sum", method = RequestMethod.GET)
-    public Long getSum() {
+    public Long getSum(@RequestParam(required = false) Integer year,
+                       @RequestParam(required = false) Integer month) {
 
-        return durationService.calculateDurationSum(durationService.get());
+        return durationService.calculateDurationSum(durationService.get(year, month));
     }
 
     @RequestMapping(value = "durations/sum", method = RequestMethod.GET, params = {"username"})
-    public Long getSumForUsername(@RequestParam(value = "username") String username) {
+    public Long getSumForUsername(@RequestParam(value = "username") String username,
+                                  @RequestParam(required = false) Integer year,
+                                  @RequestParam(required = false) Integer month) {
 
-        return durationService.calculateDurationSum(durationService.get(username));
+        return durationService.calculateDurationSum(durationService.get(username, year, month));
     }
 }

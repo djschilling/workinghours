@@ -1,5 +1,6 @@
 package de.schilling.workinghours.duration;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -8,5 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface DurationRepository extends JpaRepository<Duration, Long>{
 
-    List<Duration> findByUsername(String username);
+    List<Duration> findByUsernameAndStartTimeBetween(String username, LocalDateTime start, LocalDateTime end);
+
+    List<Duration> findByStartTimeBetween(LocalDateTime start, LocalDateTime end);
 }

@@ -8,15 +8,18 @@ import java.util.List;
 public interface DurationService {
 
     /**
-     * Retrieves all {@link de.schilling.workinghours.duration.Duration}s.
+     * Retrieves {@link de.schilling.workinghours.duration.Duration}s.
      * Only users with role admin have the right to access this method.
+     *
+     * @param year the year to filter the durations.
+     * @param month the month to filter the durations.
      *
      * @return a list of {@link de.schilling.workinghours.duration.Duration}s.
      *
      * @throws org.springframework.security.access.AccessDeniedException if user without role admin tries to access
      *  this method.
      */
-    List<Duration> get();
+    List<Duration> get(Integer year, Integer month);
 
     /**
      * Retrieves all {@link de.schilling.workinghours.duration.Duration}s for the given user.
@@ -27,7 +30,7 @@ public interface DurationService {
      * @throws org.springframework.security.access.AccessDeniedException if user without role admin and not the
      *  given username to access this method.
      */
-    List<Duration> get(String username);
+    List<Duration> get(String username, Integer year, Integer month);
 
 
     /**
