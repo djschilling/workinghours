@@ -15,16 +15,16 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DurationServiceTest {
+public class DurationServiceImplTest {
     @Mock
     private DurationRepository durationRepositoryMock;
     @Mock
     private UserService userServiceMock;
-    private DurationService sut;
+    private DurationServiceImpl sut;
 
     @Before
     public void setUp() throws Exception {
-        sut = new DurationService(durationRepositoryMock, userServiceMock);
+        sut = new DurationServiceImpl(durationRepositoryMock, userServiceMock);
     }
 
     @Test
