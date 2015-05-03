@@ -12,5 +12,8 @@
       durationFactory.getSum(function (sum) {
           $scope.sum = sum;
       });
+    durationFactory.getForCurrentMonth(function (durations) {
+      $scope.durations = durations;
+    });
   }]);
 }());

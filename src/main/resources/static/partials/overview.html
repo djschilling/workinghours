@@ -1,1 +1,22 @@
-Your hours in this month: {{sum}}
+<h2>Minuten im aktuellen Monat</h2>
+{{sum}}
+
+
+<h2>Arbeitszeiten</h2>
+
+<table class="table table-striped">
+    <thead>
+    <th>Dauer in Minuten</th>
+    <th>Tag</th>
+    <th>Von</th>
+    <th>Bis</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="duration in durations">
+        <td>{{duration.duration}}</td>
+        <td>{{duration.startTime[2]}}-{{duration.startTime[1]}}-{{duration.startTime[0]}}</td>
+        <td>{{duration.startTime[3]}}:{{duration.startTime[4]}}</td>
+        <td>{{duration.endTime[3]}}:{{duration.endTime[4]}}</td>
+    </tr>
+    </tbody>
+</table>
