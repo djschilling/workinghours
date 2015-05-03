@@ -8,15 +8,15 @@
     controllersModul = angular.module('dcc.controller', []);
   }
 
-  controllersModul.controller('DurationController', ['$scope', 'durationFactory', function ($scope, durationFactory) {
+  controllersModul.controller('DurationController', ['$scope', 'durationFactory', '$rootScope', '$location', function ($scope, durationFactory, $rootScope, $location) {
 
     $scope.submit = function () {
       var from = durationFactory.convertToDateObject($scope.day, $scope.from);
       var to = durationFactory.convertToDateObject($scope.day, $scope.to);
       durationFactory.save(from, to, function () {
-        console.log('Saved duration');
+        $rootScope.notifications.push({message: 'Erfolgreich gespeichert.', timestamp: Date.now()});
+        $location.path('/');
       });
     };
-
   }]);
 }());

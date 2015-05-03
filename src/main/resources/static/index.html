@@ -25,7 +25,11 @@
         </div>
     </div>
 </div>
-
+<div ng-controller="NotificationController">
+    <div ng-repeat="notification in notifications">
+        <div class="alert alert-success" role="alert">{{notification.message}}</div>
+    </div>
+</div>
 <div class="container">
     <div ng-view class="starter-template"></div>
 </div>
@@ -41,5 +45,6 @@
   <script src="js/overviewController.js"></script>
   <script src="js/durationController.js"></script>
   <script src="js/navBarController.js"></script>
+  <script src="js/notificationController.js"></script>
 </body>
 </html>
