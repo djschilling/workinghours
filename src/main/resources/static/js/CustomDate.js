@@ -17,6 +17,7 @@ CustomDate.prototype.getYear = function () {
 CustomDate.prototype.getHours = function () {
   return this.date.getHours();
 };
+
 CustomDate.prototype.getMinutes = function () {
     return ("0" + (this.date.getMinutes())).slice(-2);
 };

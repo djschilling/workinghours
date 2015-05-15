@@ -1,6 +1,7 @@
 package de.schilling.workinghours.duration;
 
 import java.time.LocalDateTime;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,7 +18,9 @@ public class Duration {
     private Long id;
 
     @NotNull
+    @Convert(converter = LocalDateTimePersistenceConverter.class)
     private LocalDateTime startTime;
+    @Convert(converter = LocalDateTimePersistenceConverter.class)
     private LocalDateTime endTime;
     private String username;
 
