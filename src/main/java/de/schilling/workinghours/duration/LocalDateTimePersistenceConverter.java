@@ -8,8 +8,9 @@ import java.time.LocalDateTime;
 /**
  * David Schilling - davejs92@gmail.com
  */
-@Converter
+@Converter(autoApply = true)
 public class LocalDateTimePersistenceConverter implements AttributeConverter<LocalDateTime, Timestamp> {
+
     @Override
     public Timestamp convertToDatabaseColumn(LocalDateTime attribute) {
 

@@ -3,19 +3,19 @@ var CustomDate = function () {
 };
 
 CustomDate.prototype.getDay = function () {
-  return ("0" + (this.date.getDate())).slice(-2);
+    return ("0" + (this.date.getDate())).slice(-2);
 };
 
 CustomDate.prototype.getMonth = function () {
-  return ("0" + (this.date.getMonth() + 1)).slice(-2);
+    return ("0" + (this.date.getMonth() + 1)).slice(-2);
 };
 
 CustomDate.prototype.getYear = function () {
-  return this.date.getFullYear();
+    return this.date.getFullYear();
 };
 
 CustomDate.prototype.getHours = function () {
-  return this.date.getHours();
+    return ("0" + (this.date.getHours())).slice(-2);
 };
 
 CustomDate.prototype.getMinutes = function () {

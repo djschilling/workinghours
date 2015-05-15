@@ -18,9 +18,7 @@ public class Duration {
     private Long id;
 
     @NotNull
-    @Convert(converter = LocalDateTimePersistenceConverter.class)
     private LocalDateTime startTime;
-    @Convert(converter = LocalDateTimePersistenceConverter.class)
     private LocalDateTime endTime;
     private String username;
 
@@ -30,6 +28,7 @@ public class Duration {
     public Duration(LocalDateTime startTime, LocalDateTime endTime, String username) {
         this.startTime = startTime;
         this.endTime = endTime;
+        this.username = username;
     }
 
     public LocalDateTime getStartTime() {
