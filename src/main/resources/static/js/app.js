@@ -2,7 +2,7 @@
 
     'use strict';
 
-    var dccModul = angular.module('workinghours', ['dcc.controller', 'dcc.factories', 'ngCookies', 'ngRoute']);
+    var dccModul = angular.module('workinghours', ['dcc.controller', 'dcc.factories', 'dcc.filter', 'ngCookies', 'ngRoute']);
 
 
     dccModul.config(['$routeProvider', function ($routeProvider) {
