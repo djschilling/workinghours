@@ -13,7 +13,6 @@
     window.setInterval(function(){
       $rootScope.notifications.forEach(function (notification, index) {
         var duration = (Date.now() - notification.timestamp);
-        console.log(duration);
         if((( duration) / 1000) > 3){
           $rootScope.notifications.splice(index, 1);
         }
