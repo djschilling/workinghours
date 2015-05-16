@@ -17,6 +17,7 @@
             <li><a href="#users/new" ng-show="isAdmin()">Neuer Nutzer</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right" ng-show="authenticated">
+          <li><a href="#changepassword">Passwort ändern</a></li>
             <li><a style="cursor: default">{{user.username}}</a></li>
             <li>
                 <a href="#/logout" ng-click="logout()">

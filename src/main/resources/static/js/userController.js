@@ -17,4 +17,12 @@
         });
       }
     }]);
+    controllersModul.controller('ChangePasswordController', ['$scope', '$rootScope', 'userFactory', '$location', function ($scope, $rootScope, userFactory, $location) {
+      $scope.changePassword= function () {
+        userFactory.changePassword($rootScope.user.username, $scope.password, function () {
+          $rootScope.notifications.push({message: 'Passwort Erfolgreich geändert.', timestamp: Date.now(), status: 'success'});
+          $location.path('/');
+        })
+      }
+    }]);
 }());

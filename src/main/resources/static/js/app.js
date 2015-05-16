@@ -10,6 +10,7 @@
         $routeProvider.when('/login', {templateUrl: '/partials/login.html', controller: 'LoginController'});
         $routeProvider.when('/adminoverview', {templateUrl: '/partials/adminoverview.html', controller: 'AdminOverviewController'});
         $routeProvider.when('/users/new', {templateUrl: '/partials/userNew.html', controller: 'NewUserController'});
+        $routeProvider.when('/changepassword', {templateUrl: '/partials/changepassword.html', controller: 'ChangePasswordController'});
         $routeProvider.otherwise({templateUrl: '/partials/overview.html', controller: 'OverviewController'});
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
