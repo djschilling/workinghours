@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,5 +39,10 @@ public class UserService implements UserDetailsService {
 
     public List<User> getAllUsers() {
          return userRepository.findAll();
+    }
+
+    public User save(String username, String password, String role) {
+        User entity = new User(username, new StandardPasswordEncoder().encode(password), role);
+        return userRepository.save(entity);
     }
 }
