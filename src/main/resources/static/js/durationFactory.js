@@ -29,9 +29,9 @@
     };
     factory.convertToDateObject = function (day, time) {
       var datetime = [];
-      datetime.push(parseInt(day.substr(0, 4)));
-      datetime.push(parseInt(day.substr(5, 2)));
-      datetime.push(parseInt(day.substr(8, 2)));
+      datetime.push(parseInt(day.substr(6, 4)));
+      datetime.push(parseInt(day.substr(3, 2)));
+      datetime.push(parseInt(day.substr(0, 2)));
       datetime.push(parseInt(time.substr(0, 2)));
       datetime.push(parseInt(time.substr(3, 2)));
       return datetime;

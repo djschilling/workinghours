@@ -11,7 +11,7 @@
     controllersModul.controller('DurationController', ['$scope', 'durationFactory', '$rootScope', '$location', function ($scope, durationFactory, $rootScope, $location) {
 
         var now = new CustomDate();
-        $scope.day = now.getYear() + "-" + now.getMonth() + "-" + now.getDay();
+        $scope.day = now.getDay() + "-" + now.getMonth() + "-" + now.getYear();
 
         $scope.from = now.getHours() + ":" + now.getMinutes();
         $scope.to = now.getHours() + ":" + now.getMinutes();
