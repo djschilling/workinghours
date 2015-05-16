@@ -20,6 +20,16 @@
         $http.get('/durations/sum', {params: {username: username}}).success(success);
     };
 
+    factory.getSumForUserAndMonth = function (username, month, year, success) {
+        $http.get('/durations/sum', {params:
+          {
+            username: username,
+            month: month,
+            year:year
+          }
+          }).success(success);
+    };
+
     factory.save = function (from, to, success) {
       userFactory.getCurrentUser(function (user) {
         $http.post('/durations', {startTime: from, endTime: to, username: user.username}, {params: {username: user.username}}).success(success);

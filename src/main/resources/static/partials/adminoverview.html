@@ -1,14 +1,16 @@
-<h2>Übersicht</h2>
-
-<table class="table table-striped">
-    <thead>
-      <th>Name</th>
-      <th>Arbeitzzeit</th>
-    </thead>
-    <tbody>
-    <tr ng-repeat="user in users">
-        <td>{{user.username}}</td>
-        <td>{{user.sum | duration}}</td>
-    </tr>
-    </tbody>
-</table>
+<div ng-repeat="result in results">
+  <h1>{{result.month}}, {{result.year}}</h1>
+  <table class="table table-striped">
+      <thead>
+        <th>Name</th>
+        <th>Arbeitzzeit</th>
+      </thead>
+      <tbody>
+      <tr ng-repeat="sum in result.sums | orderBy: 'username'">
+          <td>{{sum.username}}</td>
+          <td>{{sum.sum | duration}}</td>
+      </tr>
+      </tbody>
+  </table>
+</div>
+<button type="button" class="btn btn-primary" ng-click="loadMore()">Load next month</button>

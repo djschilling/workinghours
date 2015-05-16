@@ -8,15 +8,18 @@
     controllersModul = angular.module('dcc.controller', []);
   }
 
-  controllersModul.controller('AdminOverviewController', ['$scope', 'durationFactory', 'userFactory', function ($scope, durationFactory, userFactory) {
+  controllersModul.controller('AdminOverviewController', ['$scope', 'adminOverviewFactory', function ($scope, adminOverviewFactory) {
 
-    userFactory.getAllUser(function (users) {
-      $scope.users = users;
-      $scope.users.forEach(function (user) {
-        durationFactory.getSumForUser(user.username, function (sum) {
-          user.sum = sum;
-        });
-      });
+    var monthsToDisplay = 2;
+    adminOverviewFactory.getWorkingHoursForLastMonths(monthsToDisplay, function (results) {
+      $scope.results = results;
     });
+
+    $scope.loadMore = function () {
+      monthsToDisplay++;
+      adminOverviewFactory.getWorkingHoursForLastMonths(monthsToDisplay, function (results) {
+        $scope.results = results;
+      });
+    }
   }]);
 }());
