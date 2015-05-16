@@ -1,6 +1,6 @@
 package de.schilling.workinghours.duration;
 
-import de.schilling.workinghours.user.UserService;
+import de.schilling.workinghours.user.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,7 @@ public class DurationServiceImplTest {
     @Mock
     private DurationRepository durationRepositoryMock;
     @Mock
-    private UserService userServiceMock;
+    private UserServiceImpl userServiceMock;
 
     private DurationServiceImpl sut;
 

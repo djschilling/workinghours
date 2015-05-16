@@ -3,7 +3,7 @@ package de.schilling.workinghours.user;
 import org.junit.Test;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
-public class UserServiceTest {
+public class UserServiceImplTest {
 
     @Test
     public void testLoadUserByUsername() throws Exception {

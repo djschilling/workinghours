@@ -26,7 +26,7 @@ public class Startup {
     public void onStartup() {
         List<User> allUsers = userService.getAllUsers();
         if (allUsers.size() == 0) {
-            userService.save("admin", "admin", "admin");
+            userService.createUser("admin", "admin", "admin");
         }
     }
 }

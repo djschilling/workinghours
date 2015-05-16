@@ -18,6 +18,9 @@
         factory.getAllUser = function (success) {
             $http.get('/users').success(success);
         };
+        factory.createUser = function (user, success) {
+          $http.post('/users', user).success(success);
+        }
         return factory;
     }]);
 }());
