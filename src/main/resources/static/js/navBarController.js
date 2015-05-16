@@ -31,9 +31,5 @@
             $location.path("/login");
           });
         };
-
-        userFactory.getCurrentUser(function (user) {
-            $scope.user = user;
-        });
     }]);
 }());

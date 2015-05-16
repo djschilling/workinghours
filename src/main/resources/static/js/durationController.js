@@ -22,7 +22,7 @@
             var to = durationFactory.convertToDateObject($scope.day, $scope.to);
 
             durationFactory.save(from, to, function () {
-                $rootScope.notifications.push({message: 'Erfolgreich gespeichert.', timestamp: Date.now()});
+                $rootScope.notifications.push({message: 'Erfolgreich gespeichert.', timestamp: Date.now(), status: 'success'});
                 $location.path('/');
             });
         };

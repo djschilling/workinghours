@@ -11,7 +11,7 @@
 </nav>
 <div ng-controller="NotificationController">
     <div ng-repeat="notification in notifications">
-        <div class="alert alert-success" role="alert">{{notification.message}}</div>
+        <div class="alert alert-{{notification.status}}" role="alert">{{notification.message}}</div>
     </div>
 </div>
 <div class="container">

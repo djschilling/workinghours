@@ -18,9 +18,9 @@
       authenticationFactory.authenticate($scope.credentials, function() {
         if ($rootScope.authenticated) {
           $location.path("/");
-          $scope.error = false;
+          $rootScope.notifications.push({message: 'Login Erfolgreich', timestamp: Date.now(), status:'success'});
         } else {
-          $scope.error = true;
+          $rootScope.notifications.push({message: 'Login nicht Erfolgreich', timestamp: Date.now(), status:'danger'});
         }
       });
     };

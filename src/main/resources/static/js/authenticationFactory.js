@@ -11,6 +11,8 @@
 	factoriesModul.factory('authenticationFactory', ['$http', '$rootScope', function ($http, $rootScope) {
 		var factory = {};
 
+		$rootScope.user = {};
+
 		factory.authenticate = function (credentials, callback) {
       var headers = credentials ? {
         authorization: "Basic " + btoa(credentials.username + ":" + credentials.password)
@@ -21,6 +23,7 @@
       }).success(function(data) {
         if (data.username) {
           $rootScope.authenticated = true;
+					$rootScope.user.username = data.username;
         } else {
           $rootScope.authenticated = false;
         }
