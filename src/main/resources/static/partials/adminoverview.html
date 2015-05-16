@@ -1,0 +1,14 @@
+<h2>Übersicht</h2>
+
+<table class="table table-striped">
+    <thead>
+      <th>Name</th>
+      <th>Arbeitzzeit</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="user in users">
+        <td>{{user.username}}</td>
+        <td>{{user.sum | duration}}</td>
+    </tr>
+    </tbody>
+</table>

@@ -24,6 +24,7 @@
         if (data.username) {
           $rootScope.authenticated = true;
 					$rootScope.user.username = data.username;
+					$rootScope.user.role = data.role;
         } else {
           $rootScope.authenticated = false;
         }
@@ -39,6 +40,8 @@
       .success(function(data) {
         if (data.username) {
           $rootScope.authenticated = true;
+					$rootScope.user.username = data.username;
+					$rootScope.user.role = data.role;
         } else {
           $rootScope.authenticated = false;
         }
@@ -52,12 +55,18 @@
     factory.logout = function(callback) {
       $http.post('logout', {}).success(function() {
         $rootScope.authenticated = false;
+				$rootScope.user = {};
         callback && callback();
       }).error(function(data) {
         $rootScope.authenticated = false;
+				$rootScope.user = {};
         callback && callback();
       });
     };
+
+		$rootScope.isAdmin = function () {
+			return $rootScope.authenticated && $rootScope.user.role === 'admin';
+		}
 
 		return factory;
 	}]);

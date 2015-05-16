@@ -15,6 +15,9 @@
         factory.getCurrentUser = function (success) {
             $http.get('/whoami').success(success);
         };
+        factory.getAllUser = function (success) {
+            $http.get('/users').success(success);
+        };
         return factory;
     }]);
 }());
