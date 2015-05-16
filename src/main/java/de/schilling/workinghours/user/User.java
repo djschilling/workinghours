@@ -17,6 +17,10 @@ public class User implements UserDetails {
     @Id
     private String username;
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     private String password;
 
     private String role;

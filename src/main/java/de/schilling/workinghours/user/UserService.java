@@ -6,13 +6,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 
 /**
- * Created by david on 16.05.15.
+ * David Schilling - davejs92@gmail.com
  */
 public interface UserService extends UserDetailsService {
+
     User getCurrentlyLoggedIn();
 
     List<User> getAllUsers();
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     User createUser(String username, String password, String role);
+
+    @PreAuthorize("#username == principal.username")
+    void changePassword(String username, String password);
 }

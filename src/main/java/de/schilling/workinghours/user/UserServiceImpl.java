@@ -45,4 +45,12 @@ public class UserServiceImpl implements UserService {
         User entity = new User(username, new StandardPasswordEncoder().encode(password), role);
         return userRepository.save(entity);
     }
+
+    @Override
+    public void changePassword(String username, String password) {
+
+        User user = userRepository.findOne(username);
+        user.setPassword(new StandardPasswordEncoder().encode(password));
+        userRepository.save(user);
+    }
 }
