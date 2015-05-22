@@ -1,12 +1,18 @@
 package de.schilling.workinghours;
 
 import de.schilling.workinghours.user.User;
-import de.schilling.workinghours.user.UserService;
+import de.schilling.workinghours.user.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
+
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
+
 
 /**
  * Created by david on 16.05.15.
@@ -14,19 +20,21 @@ import java.util.List;
 @Component
 public class Startup {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public Startup(UserService userService) {
-        this.userService = userService;
-    }
+    public Startup(UserRepository userRepository) {
 
+        this.userRepository = userRepository;
+    }
 
     @PostConstruct
     public void onStartup() {
-        List<User> allUsers = userService.getAllUsers();
+
+        List<User> allUsers = userRepository.findAll();
+
         if (allUsers.size() == 0) {
-            userService.createUser("admin", "admin", "admin");
+            userRepository.save(new User("admin", new StandardPasswordEncoder().encode("admin"), "admin"));
         }
     }
 }
