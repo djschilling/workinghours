@@ -18,9 +18,9 @@
     <tbody>
     <tr ng-repeat="duration in durations">
         <td>{{duration.duration | duration}}</td>
-        <td>{{duration.startTime[2]}}-{{duration.startTime[1]}}-{{duration.startTime[0]}}</td>
-        <td>{{duration.startTime[3]}}:{{duration.startTime[4]}}</td>
-        <td>{{duration.endTime[3]}}:{{duration.endTime[4]}}</td>
+        <td>{{duration.startTime | date}}</td>
+        <td>{{duration.startTime | time}}</td>
+        <td>{{duration.endTime | time}}</td>
     </tr>
     </tbody>
 </table>

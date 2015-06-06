@@ -1,5 +1,5 @@
 <div ng-repeat="result in results" id="results{{result.month}}{{result.year}}">
-  <h1>{{result.month}}, {{result.year}}</h1>
+  <h1>{{result.month | month}}, {{result.year}}</h1>
   <table class="table table-striped">
       <thead>
         <th>Name</th>
