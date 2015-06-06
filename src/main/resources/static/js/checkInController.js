@@ -17,7 +17,7 @@
             CheckInFactory.isCheckedIn(function (isCheckedIn, lastDuration) {
                 $scope.isCheckedIn = isCheckedIn;
                 if (isCheckedIn) {
-                    $scope.from = lastDuration.startTime[3] + ":" + lastDuration.startTime[4];
+                    $scope.from = lastDuration.startTime.getHours() + ":" + lastDuration.startTime.getMinutes();
                     $scope.to = now.getHours() + ":" + now.getMinutes();
                 } else {
                     $scope.from = now.getHours() + ":" + now.getMinutes();

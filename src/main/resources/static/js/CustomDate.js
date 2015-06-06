@@ -1,5 +1,10 @@
-var CustomDate = function () {
-    this.date = new Date();
+var CustomDate = function (date) {
+    if(date){
+      this.date = date;
+    }
+    else {
+      this.date = new Date();
+    }
 };
 
 CustomDate.prototype.getDay = function () {

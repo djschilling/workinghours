@@ -9,13 +9,13 @@
     }
 
     filterModule.filter('time', function() {
-        return function(time) {
-            if(time === null) {
+        return function(customDate) {
+            if(customDate === null) {
                 return "--:--"
             }
-            var hour = time[3];
-            var minute = time[4];
-            var output = ("00" + hour).slice(-2) + ":" + ("00" + minute).slice(-2);
+            var hour = customDate.getHours();
+            var minute = customDate.getMinutes();
+            var output = hour + ":" + minute;
             return output;
         };
     });
@@ -25,11 +25,10 @@
             if(date === null) {
                 return "--:--:----"
             }
-            var day = date[2];
-            var month = date[1];
-            var year = date[0];
-            var output = ("0" + day).slice(-2) + "-" + ("0" + month).slice(-2) + "-" + year;
-            return output;
+            var day = date.getDay();
+            var month = date.getMonth();
+            var year = date.getYear();
+            return day + "-" + month + "-" + year;
         };
     });
 
@@ -45,6 +44,4 @@
             return output;
         };
     });
-
-
 }());

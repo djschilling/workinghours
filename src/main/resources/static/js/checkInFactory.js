@@ -9,25 +9,21 @@
     }
 
 
-    factoriesModul.factory('CheckInFactory', ['$http', 'userFactory', function ($http, userFactory) {
+    factoriesModul.factory('CheckInFactory', ['$http', 'durationFactory', function ($http, durationFactory) {
         var factory = {};
         factory.isCheckedIn = function (success) {
-            userFactory.getCurrentUser(function (user) {
-                $http.get('/durations', {params: {username: user.username}}).success(
-                    function(durations){
-                        if(durations.length === 0) {
-                            success(false);
-                        } else {
-                            var lastDuration = durations[0];
-                            if(lastDuration.endTime === null) {
-                                success(true, lastDuration);
-                            } else {
-                                success(false);
-                            }
-                        }
-                    }
-                );
-            });
+          durationFactory.getForCurrentMonth(function (durations) {
+            if (durations.length === 0) {
+              success(false);
+            } else {
+              var lastDuration = durations[0];
+              if (lastDuration.endTime === null) {
+                success(true, lastDuration);
+              } else {
+                success(false);
+              }
+            }
+          });
         };
         return factory;
     }]);

@@ -29,7 +29,6 @@
                   durationFactory.getSumForUserAndMonth(user.username, result.month,result.year, function (sum) {
                     result.sums.push({username: user.username, sum: sum});
                     resultCounter++;
-                    console.log(innercounter);
                     if(result.sums.length === users.length){
                       results[innercounter] = result;
                     }

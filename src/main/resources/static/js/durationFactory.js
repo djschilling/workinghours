@@ -11,6 +11,14 @@
   factoriesModul.factory('durationFactory', ['$http', 'userFactory', function ($http, userFactory) {
     var factory = {};
 
+    function convertDateArrayToObject(dateArray) {
+      if (dateArray){
+        return new CustomDate(new Date(dateArray[0], dateArray[1], dateArray[2], dateArray[3], dateArray[4], 0, 0));
+      }
+      return null;
+
+    }
+
     factory.getSum = function (success) {
       userFactory.getCurrentUser(function (user) {
         $http.get('/durations/sum', {params: {username: user.username}}).success(success);
@@ -42,7 +50,13 @@
     };
     factory.getForCurrentMonth = function (success) {
       userFactory.getCurrentUser(function (user) {
-        $http.get('/durations', {params: {username: user.username}}).success(success);
+        $http.get('/durations', {params: {username: user.username}}).success(function (durations) {
+          durations.forEach(function (duration) {
+            duration.startTime = convertDateArrayToObject(duration.startTime);
+            duration.endTime = convertDateArrayToObject(duration.endTime);
+          });
+          success(durations);
+        });
       });
 
     };
