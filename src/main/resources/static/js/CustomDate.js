@@ -15,10 +15,10 @@ CustomDate.prototype.getYear = function () {
 };
 
 CustomDate.prototype.getHours = function () {
-    return ("0" + (this.date.getHours())).slice(-2);
+    return ("00" + (this.date.getHours())).slice(-2);
 };
 
 CustomDate.prototype.getMinutes = function () {
-    return ("0" + (this.date.getMinutes())).slice(-2);
+    return ("00" + (this.date.getMinutes())).slice(-2);
 };
 

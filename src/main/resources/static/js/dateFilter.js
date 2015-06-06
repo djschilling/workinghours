@@ -15,7 +15,7 @@
             }
             var hour = time[3];
             var minute = time[4];
-            var output = ("0" + hour).slice(-2) + ":" + ("0" + minute).slice(-2);
+            var output = ("00" + hour).slice(-2) + ":" + ("00" + minute).slice(-2);
             return output;
         };
     });
