@@ -1,6 +1,7 @@
 package de.schilling.workinghours.duration;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * @author David Schilling - davejs92@gmail.com
@@ -19,6 +20,7 @@ public interface DurationService {
      * @throws org.springframework.security.access.AccessDeniedException if user without role admin tries to access
      *  this method.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     List<Duration> get(Integer year, Integer month);
 
     /**
@@ -30,6 +32,7 @@ public interface DurationService {
      * @throws org.springframework.security.access.AccessDeniedException if user without role admin and not the
      *  given username to access this method.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or #username == principal.username")
     List<Duration> get(String username, Integer year, Integer month);
 
 
@@ -43,11 +46,20 @@ public interface DurationService {
     long calculateDurationSum(List<Duration> durations);
 
     /**
-     * Saves the given {@link de.schilling.workinghours.duration.Duration} for the logged in user.
+     * Creates the given {@link de.schilling.workinghours.duration.Duration} for the logged in user.
      *
-     * @param duration the {@link de.schilling.workinghours.duration.Duration} object to save.
+     * @param duration the {@link de.schilling.workinghours.duration.Duration} object to create.
      *
-     * @return the saved {@link de.schilling.workinghours.duration.Duration}.
+     * @return the created {@link de.schilling.workinghours.duration.Duration}.
      */
-    Duration save(Duration duration);
+    Duration create(Duration duration);
+
+    /**
+     * Updates the given {@link de.schilling.workinghours.duration.Duration} for the logged in user.
+     *
+     * @param duration the {@link de.schilling.workinghours.duration.Duration} object to create.
+     *
+     * @return the created {@link de.schilling.workinghours.duration.Duration}.
+     */
+    Duration update(Duration duration, Long id);
 }

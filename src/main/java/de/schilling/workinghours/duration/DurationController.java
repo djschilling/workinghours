@@ -21,13 +21,14 @@ public class DurationController {
 
     @RequestMapping(value = "durations", method = RequestMethod.POST)
     public Duration save(@RequestBody @Valid Duration duration) {
-        return durationService.save(duration);
+        return durationService.create(duration);
     }
 
     @RequestMapping(value = "durations/{id}", method = RequestMethod.PUT)
     public Duration save(@RequestBody @Valid Duration duration, @PathVariable Long id) {
         duration.setId(id);
-        return durationService.save(duration);
+        Duration update = durationService.update(duration, id);
+        return update;
     }
 
     @RequestMapping(value = "durations", method = RequestMethod.GET)

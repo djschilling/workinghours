@@ -1,12 +1,12 @@
 package de.schilling.workinghours.duration;
 
+import de.schilling.workinghours.user.User;
 import de.schilling.workinghours.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.stereotype.Service;
 
 import static java.util.Collections.unmodifiableList;
 
@@ -27,7 +27,6 @@ public class DurationServiceImpl implements DurationService {
     }
 
     @Override
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Duration> get(Integer year, Integer month) {
 
         LocalDateTime from = calculateStartOfMonth(year, month);
@@ -37,7 +36,6 @@ public class DurationServiceImpl implements DurationService {
     }
 
     @Override
-    @PreAuthorize("hasRole('ROLE_ADMIN') or #username == principal.username")
     public List<Duration> get(String username, Integer year, Integer month) {
 
         LocalDateTime from = calculateStartOfMonth(year, month);
@@ -54,10 +52,28 @@ public class DurationServiceImpl implements DurationService {
                 sum();
     }
 
-    public Duration save(Duration duration) {
+    @Override
+    public Duration create(Duration duration) {
 
         duration.setUsername(userService.getCurrentlyLoggedIn().getUsername());
+        duration.setId(null);
         return durationRepository.save(duration);
+    }
+
+    @Override
+    public Duration update(Duration duration, Long id) {
+
+        Duration previous = durationRepository.getOne(id);
+        duration.setUsername(previous.getUsername());
+        duration.setId(id);
+
+        User user = userService.getCurrentlyLoggedIn();
+        if(!user.getAuthorities().contains("ROLE_ADMIN") && !user.getUsername().equals(duration.getUsername())) {
+            throw new AccessDeniedException("Duration cannot be updated by other User");
+        }
+
+        durationRepository.save(duration);
+        return duration;
     }
 
     private LocalDateTime calculateStartOfMonth(Integer year, Integer month) {
