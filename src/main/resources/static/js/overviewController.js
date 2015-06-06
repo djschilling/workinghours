@@ -14,10 +14,10 @@
                $scope.isCheckedIn = isCheckedIn;
                if(isCheckedIn) {
                    $scope.status = 'success';
-                   $scope.buttonText = 'Laufende Zeitmessung abschließen';
+                   $scope.buttonText = 'Zeitmessung abschließen';
                } else {
                    $scope.status = 'warning';
-                   $scope.buttonText = 'Neue Zeitmessung starten';
+                   $scope.buttonText = 'Zeitmessung starten';
                }
 
             });
