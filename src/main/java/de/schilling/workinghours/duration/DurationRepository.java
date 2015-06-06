@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface DurationRepository extends JpaRepository<Duration, Long>{
 
-    List<Duration> findByUsernameAndStartTimeBetween(String username, LocalDateTime start, LocalDateTime end);
+    List<Duration> findByUsernameAndStartTimeBetweenOrderByStartTimeDesc(String username, LocalDateTime start, LocalDateTime end);
 
-    List<Duration> findByStartTimeBetween(LocalDateTime start, LocalDateTime end);
+    List<Duration> findByStartTimeBetweenOrderByStartTimeDesc(LocalDateTime start, LocalDateTime end);
 }

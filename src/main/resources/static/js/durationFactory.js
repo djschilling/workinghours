@@ -35,6 +35,11 @@
         $http.post('/durations', {startTime: from, endTime: to, username: user.username}, {params: {username: user.username}}).success(success);
       });
     };
+
+    factory.update = function(from, to, id, success) {
+        $http.put('/durations/' + id, {startTime: from, endTime: to}).success(success);
+
+    };
     factory.getForCurrentMonth = function (success) {
       userFactory.getCurrentUser(function (user) {
         $http.get('/durations', {params: {username: user.username}}).success(success);

@@ -33,7 +33,7 @@ public class DurationServiceImpl implements DurationService {
         LocalDateTime from = calculateStartOfMonth(year, month);
         LocalDateTime to = from.plusMonths(1).minusNanos(1);
 
-        return unmodifiableList(durationRepository.findByStartTimeBetween(from, to));
+        return unmodifiableList(durationRepository.findByStartTimeBetweenOrderByStartTimeDesc(from, to));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class DurationServiceImpl implements DurationService {
         LocalDateTime from = calculateStartOfMonth(year, month);
         LocalDateTime to = from.plusMonths(1).minusNanos(1);
 
-        return unmodifiableList(durationRepository.findByUsernameAndStartTimeBetween(username, from, to));
+        return unmodifiableList(durationRepository.findByUsernameAndStartTimeBetweenOrderByStartTimeDesc(username, from, to));
     }
 
     @Override
