@@ -12,7 +12,7 @@ CustomDate.prototype.getDay = function () {
 };
 
 CustomDate.prototype.getMonth = function () {
-    return ("0" + (this.date.getMonth() + 1)).slice(-2);
+    return ("0" + (this.date.getMonth())).slice(-2);
 };
 
 CustomDate.prototype.getYear = function () {
