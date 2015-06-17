@@ -13,7 +13,7 @@
 
     function convertDateArrayToObject(dateArray) {
       if (dateArray){
-        return new CustomDate(new Date(dateArray[0], dateArray[1], dateArray[2], dateArray[3], dateArray[4], 0, 0));
+        return new CustomDate(new Date(dateArray[0], dateArray[1] - 1, dateArray[2], dateArray[3], dateArray[4], 0, 0));
       }
       return null;
 
