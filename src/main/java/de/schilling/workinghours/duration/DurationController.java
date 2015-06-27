@@ -27,8 +27,7 @@ public class DurationController {
     @RequestMapping(value = "durations/{id}", method = RequestMethod.PUT)
     public Duration save(@RequestBody @Valid Duration duration, @PathVariable Long id) {
         duration.setId(id);
-        Duration update = durationService.update(duration, id);
-        return update;
+        return durationService.update(duration, id);
     }
 
     @RequestMapping(value = "durations", method = RequestMethod.GET)
@@ -59,5 +58,10 @@ public class DurationController {
                                   @RequestParam(required = false) Integer month) {
 
         return durationService.calculateDurationSum(durationService.get(username, year, month));
+    }
+
+    @RequestMapping(value = "durations/{id}", method = RequestMethod.GET)
+    public Duration get(@PathVariable Long id) {
+        return durationService.get(id);
     }
 }

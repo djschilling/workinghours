@@ -14,6 +14,7 @@
     <th>Tag</th>
     <th>Von</th>
     <th>Bis</th>
+    <th></th>
     </thead>
     <tbody>
     <tr ng-repeat="duration in durations">
@@ -21,6 +22,7 @@
         <td>{{duration.startTime | date}}</td>
         <td>{{duration.startTime | time}}</td>
         <td>{{duration.endTime | time}}</td>
+        <td><a href="#duration/{{duration.id}}">Edit</a></td>
     </tr>
     </tbody>
 </table>

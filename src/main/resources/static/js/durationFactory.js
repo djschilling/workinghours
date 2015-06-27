@@ -38,7 +38,7 @@
           }).success(success);
     };
 
-    factory.save = function (from, to, success) {
+    factory.create = function (from, to, success) {
       userFactory.getCurrentUser(function (user) {
         $http.post('/durations', {startTime: from, endTime: to, username: user.username}, {params: {username: user.username}}).success(success);
       });
@@ -58,7 +58,15 @@
           success(durations);
         });
       });
-
+    };
+    factory.getById = function (id, success) {
+      userFactory.getCurrentUser(function (user) {
+        $http.get('/durations/' + id).success(function (duration) {
+          duration.startTime = convertDateArrayToObject(duration.startTime);
+          duration.endTime = convertDateArrayToObject(duration.endTime);
+          success(duration);
+        });
+      });
     };
     factory.convertToDateObject = function (day, time) {
       var datetime = [];

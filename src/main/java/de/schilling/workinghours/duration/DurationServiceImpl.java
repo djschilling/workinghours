@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static java.util.Collections.unmodifiableList;
 
@@ -14,6 +15,7 @@ import static java.util.Collections.unmodifiableList;
  * @author David Schilling - davejs92@gmail.com
  */
 @Service
+@Transactional
 public class DurationServiceImpl implements DurationService {
 
     private DurationRepository durationRepository;
@@ -73,6 +75,19 @@ public class DurationServiceImpl implements DurationService {
         }
 
         durationRepository.save(duration);
+        return duration;
+    }
+
+    @Override
+    public Duration get(Long id) {
+        User user = userService.getCurrentlyLoggedIn();
+        Duration duration = durationRepository.findById(id);
+        if (duration == null) {
+            return null;// TODO
+        }
+        if(!user.getAuthorities().contains("ROLE_ADMIN") && !user.getUsername().equals(duration.getUsername())) {
+            throw new AccessDeniedException("Access denied for user " + user.getUsername() + " for duration with id " + id);
+        }
         return duration;
     }
 

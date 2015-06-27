@@ -25,7 +25,7 @@
               result.month = currentDate.getMonth() + 1;
               result.year = currentDate.getFullYear();
               userFactory.getAllUser(function (users) {
-                users.forEach(function (user, index) {
+                users.forEach(function (user) {
                   durationFactory.getSumForUserAndMonth(user.username, result.month,result.year, function (sum) {
                     result.sums.push({username: user.username, sum: sum});
                     resultCounter++;

@@ -35,7 +35,7 @@
 
             $scope.checkIn = function () {
                 var from = durationFactory.convertToDateObject($scope.day, $scope.from);
-                durationFactory.save(from, null, function () {
+                durationFactory.create(from, null, function () {
                     $rootScope.notifications.push({message: 'Checkin erfolgreich.', timestamp: Date.now(), status: 'success'});
                     $location.path('/');
                 });

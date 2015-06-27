@@ -62,4 +62,11 @@ public interface DurationService {
      * @return the created {@link de.schilling.workinghours.duration.Duration}.
      */
     Duration update(Duration duration, Long id);
+
+    /**
+     * @param id
+     *
+     * @return the {@link de.schilling.workinghours.duration.Duration} for the given id.
+     */
+    Duration get(Long id);
 }
