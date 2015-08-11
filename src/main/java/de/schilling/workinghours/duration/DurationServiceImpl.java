@@ -55,10 +55,10 @@ public class DurationServiceImpl implements DurationService {
     }
 
     @Override
-    public Duration create(Duration duration) {
-
+    public Duration create(Duration duration) throws InvalidDurationException {
         duration.setUsername(userService.getCurrentlyLoggedIn().getUsername());
         duration.setId(null);
+        validateDuration(duration);
         return durationRepository.save(duration);
     }
 
@@ -112,5 +112,46 @@ public class DurationServiceImpl implements DurationService {
             startOfMonth = LocalDateTime.of(now.getYear(), now.getMonth(), 1, 0, 0);
         }
         return startOfMonth;
+    }
+
+    private void validateDuration(Duration duration) throws InvalidDurationException {
+        //List<Duration> durationList = durationRepository.findByStartTimeBetweenOrderByStartTimeDesc(LocalDateTime.MIN, LocalDateTime.MAX);
+        List<Duration> durationList = durationRepository.findByUsernameAndStartTimeBetweenOrderByStartTimeDesc(duration.getUsername(), LocalDateTime.of(2000, 1,1,1,1), LocalDateTime.of(2100, 1,1,1,1)); //TODO: Zeile darüer funktioniert nicht; es kommen keine durations zurück
+        for(Duration currentDuration : durationList) {
+            if(currentDuration.getEndTime() == null) {
+                if(currentDuration.getStartTime().isAfter(duration.getEndTime())) {
+                    //super
+                } else {
+                    if(currentDuration.getStartTime().isBefore(duration.getStartTime())) {
+                        //super
+                    } else {
+                        throw new InvalidDurationException();
+                    }
+                }
+            } else {
+                if(duration.getEndTime() == null)
+                {
+                    if(duration.getStartTime().isAfter(currentDuration.getEndTime())) {
+                        //super
+                    } else {
+                        if(duration.getStartTime().isBefore(currentDuration.getStartTime())) {
+                            //super
+                        } else {
+                            throw new InvalidDurationException();
+                        }
+                    }
+                } else {
+                    if(currentDuration.getStartTime().isAfter(duration.getEndTime())) {
+                        //currentDuration startet erst nach ende der duration
+                    } else {
+                        if(currentDuration.getEndTime().isBefore(duration.getStartTime())) {
+                            //duration startet erst nach ende der currendDuration
+                        } else {
+                            throw new InvalidDurationException();
+                        }
+                    }
+                }
+            }
+        }
     }
 }

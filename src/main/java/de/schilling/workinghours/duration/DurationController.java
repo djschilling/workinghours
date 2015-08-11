@@ -23,7 +23,11 @@ public class DurationController {
 
     @RequestMapping(value = "durations", method = RequestMethod.POST)
     public Duration save(@RequestBody @Valid Duration duration) {
-        return durationService.create(duration);
+        try {
+            return durationService.create(duration);
+        } catch (InvalidDurationException e) {
+            return null; //TODO muss noch richtig gemacht werden
+        }
     }
 
     @RequestMapping(value = "durations/{id}", method = RequestMethod.PUT)

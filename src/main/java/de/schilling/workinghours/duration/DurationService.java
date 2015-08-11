@@ -54,7 +54,7 @@ public interface DurationService {
      *
      * @return the created {@link de.schilling.workinghours.duration.Duration}.
      */
-    Duration create(Duration duration);
+    Duration create(Duration duration) throws InvalidDurationException;
 
     /**
      * Updates the given {@link de.schilling.workinghours.duration.Duration} for the logged in user.
