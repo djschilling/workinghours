@@ -59,11 +59,11 @@ public class DurationServiceImpl implements DurationService {
     }
 
     @Override
-    public Duration create(Duration duration) throws InvalidDurationException {
+    public Duration create(Duration duration) {
         duration.setUsername(userService.getCurrentlyLoggedIn().getUsername());
         duration.setId(null);
         if (!durationValidationService.validateNewDuration(duration)) {
-            throw new InvalidDurationException();
+            throw new InvalidDurationException("Duration collidates with other duration.");
         }
         return durationRepository.save(duration);
     }

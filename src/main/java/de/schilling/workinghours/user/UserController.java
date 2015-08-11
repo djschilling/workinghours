@@ -1,11 +1,14 @@
 package de.schilling.workinghours.user;
 
+import de.schilling.workinghours.duration.InvalidDurationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -42,7 +45,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "users/{username}/changepassword", method = POST)
-    public void changePassword(@PathVariable(value = "username") String userName, @RequestBody String password){
+    public void changePassword(@PathVariable(value = "username") String userName, @RequestBody String password) {
         userService.changePassword(userName, password);
     }
 }

@@ -1,11 +1,13 @@
 package de.schilling.workinghours.duration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
 /**
@@ -23,11 +25,7 @@ public class DurationController {
 
     @RequestMapping(value = "durations", method = RequestMethod.POST)
     public Duration save(@RequestBody @Valid Duration duration) {
-        try {
-            return durationService.create(duration);
-        } catch (InvalidDurationException e) {
-            return null; //TODO muss noch richtig gemacht werden
-        }
+        return durationService.create(duration);
     }
 
     @RequestMapping(value = "durations/{id}", method = RequestMethod.PUT)
@@ -75,4 +73,11 @@ public class DurationController {
     public void delete(@PathVariable Long id) {
         durationService.delete(id);
     }
+
+    @ExceptionHandler(InvalidDurationException.class)
+    ResponseEntity<String> handleValidationException(InvalidDurationException e) {
+
+        return new ResponseEntity<>(e.getMessage(), BAD_REQUEST);
+    }
+
 }

@@ -38,13 +38,13 @@
             }).success(success);
         };
 
-        factory.create = function (from, to, success) {
+        factory.create = function (from, to, success, error) {
             userFactory.getCurrentUser(function (user) {
                 $http.post('/durations', {
                     startTime: from,
                     endTime: to,
                     username: user.username
-                }, {params: {username: user.username}}).success(success);
+                }, {params: {username: user.username}}).success(success).error(error);
             });
         };
 

@@ -43,10 +43,17 @@
                     });
                     $location.path('/');
                 };
+                var error = function (response) {
+                    $rootScope.notifications.push({
+                        message: response,
+                        timestamp: Date.now(),
+                        status: 'danger'
+                    });
+                };
                 if ($scope.update) {
                     durationFactory.update(from, to, $routeParams.id, success);
                 } else {
-                    durationFactory.create(from, to, success);
+                    durationFactory.create(from, to, success, error);
                 }
             };
         }]);
