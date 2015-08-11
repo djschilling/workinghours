@@ -1,6 +1,7 @@
 package de.schilling.workinghours.duration;
 
 import de.schilling.workinghours.user.User;
+import de.schilling.workinghours.user.UserService;
 import de.schilling.workinghours.user.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,13 +24,15 @@ public class DurationServiceImplTest {
     @Mock
     private DurationRepository durationRepositoryMock;
     @Mock
-    private UserServiceImpl userServiceMock;
+    private UserService userServiceMock;
+    @Mock
+    private DurationValidationService durationValidationServiceMock;
 
     private DurationServiceImpl sut;
 
     @Before
     public void setUp() throws Exception {
-        sut = new DurationServiceImpl(durationRepositoryMock, userServiceMock);
+        sut = new DurationServiceImpl(durationRepositoryMock, userServiceMock, durationValidationServiceMock);
     }
 
     @Test

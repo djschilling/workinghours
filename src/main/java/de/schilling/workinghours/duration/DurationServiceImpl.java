@@ -2,8 +2,10 @@ package de.schilling.workinghours.duration;
 
 import de.schilling.workinghours.user.User;
 import de.schilling.workinghours.user.UserService;
+
 import java.time.LocalDateTime;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
@@ -18,14 +20,16 @@ import static java.util.Collections.unmodifiableList;
 @Transactional
 public class DurationServiceImpl implements DurationService {
 
-    private DurationRepository durationRepository;
-    private UserService userService;
+    private final DurationRepository durationRepository;
+    private final UserService userService;
+    private final DurationValidationService durationValidationService;
 
     @Autowired
-    public DurationServiceImpl(DurationRepository durationRepository, UserService userService) {
+    public DurationServiceImpl(DurationRepository durationRepository, UserService userService, DurationValidationService durationValidationService) {
 
         this.durationRepository = durationRepository;
         this.userService = userService;
+        this.durationValidationService = durationValidationService;
     }
 
     @Override
@@ -58,7 +62,9 @@ public class DurationServiceImpl implements DurationService {
     public Duration create(Duration duration) throws InvalidDurationException {
         duration.setUsername(userService.getCurrentlyLoggedIn().getUsername());
         duration.setId(null);
-        validateDuration(duration);
+        if (!durationValidationService.validateNewDuration(duration)) {
+            throw new InvalidDurationException();
+        }
         return durationRepository.save(duration);
     }
 
@@ -70,7 +76,7 @@ public class DurationServiceImpl implements DurationService {
         duration.setId(id);
 
         User user = userService.getCurrentlyLoggedIn();
-        if(!user.getAuthorities().contains("ROLE_ADMIN") && !user.getUsername().equals(duration.getUsername())) {
+        if (!user.getAuthorities().contains("ROLE_ADMIN") && !user.getUsername().equals(duration.getUsername())) {
             throw new AccessDeniedException("Duration cannot be updated by other User");
         }
 
@@ -85,7 +91,7 @@ public class DurationServiceImpl implements DurationService {
         if (duration == null) {
             return null;// TODO
         }
-        if(!user.getAuthorities().contains("ROLE_ADMIN") && !user.getUsername().equals(duration.getUsername())) {
+        if (!user.getAuthorities().contains("ROLE_ADMIN") && !user.getUsername().equals(duration.getUsername())) {
             throw new AccessDeniedException("Access denied for user " + user.getUsername() + " for duration with id " + id);
         }
         return duration;
@@ -97,7 +103,7 @@ public class DurationServiceImpl implements DurationService {
 
         User user = userService.getCurrentlyLoggedIn();
 
-        if(!one.getUsername().equals(user.getUsername())) {
+        if (!one.getUsername().equals(user.getUsername())) {
             throw new AccessDeniedException("Access denied for user " + user.getUsername() + " for duration with id " + id);
         }
         durationRepository.delete(id);
@@ -105,7 +111,7 @@ public class DurationServiceImpl implements DurationService {
 
     private LocalDateTime calculateStartOfMonth(Integer year, Integer month) {
         LocalDateTime startOfMonth;
-        if(year != null && month != null) {
+        if (year != null && month != null) {
             startOfMonth = LocalDateTime.of(year, month, 1, 0, 0);
         } else {
             LocalDateTime now = LocalDateTime.now();
@@ -114,44 +120,4 @@ public class DurationServiceImpl implements DurationService {
         return startOfMonth;
     }
 
-    private void validateDuration(Duration duration) throws InvalidDurationException {
-        //List<Duration> durationList = durationRepository.findByStartTimeBetweenOrderByStartTimeDesc(LocalDateTime.MIN, LocalDateTime.MAX);
-        List<Duration> durationList = durationRepository.findByUsernameAndStartTimeBetweenOrderByStartTimeDesc(duration.getUsername(), LocalDateTime.of(2000, 1,1,1,1), LocalDateTime.of(2100, 1,1,1,1)); //TODO: Zeile darüer funktioniert nicht; es kommen keine durations zurück
-        for(Duration currentDuration : durationList) {
-            if(currentDuration.getEndTime() == null) {
-                if(currentDuration.getStartTime().isAfter(duration.getEndTime())) {
-                    //super
-                } else {
-                    if(currentDuration.getStartTime().isBefore(duration.getStartTime())) {
-                        //super
-                    } else {
-                        throw new InvalidDurationException();
-                    }
-                }
-            } else {
-                if(duration.getEndTime() == null)
-                {
-                    if(duration.getStartTime().isAfter(currentDuration.getEndTime())) {
-                        //super
-                    } else {
-                        if(duration.getStartTime().isBefore(currentDuration.getStartTime())) {
-                            //super
-                        } else {
-                            throw new InvalidDurationException();
-                        }
-                    }
-                } else {
-                    if(currentDuration.getStartTime().isAfter(duration.getEndTime())) {
-                        //currentDuration startet erst nach ende der duration
-                    } else {
-                        if(currentDuration.getEndTime().isBefore(duration.getStartTime())) {
-                            //duration startet erst nach ende der currendDuration
-                        } else {
-                            throw new InvalidDurationException();
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
