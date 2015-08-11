@@ -15,6 +15,7 @@
     <th>Von</th>
     <th>Bis</th>
     <th></th>
+    <th></th>
     </thead>
     <tbody>
     <tr ng-repeat="duration in durations">
@@ -22,7 +23,8 @@
         <td>{{duration.startTime | date}}</td>
         <td>{{duration.startTime | time}}</td>
         <td>{{duration.endTime | time}}</td>
-        <td><a href="#duration/{{duration.id}}">Edit</a></td>
+        <td><a href="#duration/{{duration.id}}"><button type="button" class="btn btn-info">Edit</button></a></td>
+        <td ng-click="delete(duration.id)"><button type="button" class="btn btn-danger">Delete</button></td>
     </tr>
     </tbody>
 </table>
