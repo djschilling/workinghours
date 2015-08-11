@@ -29,10 +29,15 @@
                     $scope.durations = durations;
                 });
             }
+
             $scope.delete = function (id) {
                 durationFactory.delete(id, function () {
                     init();
-                    $rootScope.notifications.push({message: 'Löschen erfolgreich', timestamp: Date.now(), status: 'success'});
+                    $rootScope.notifications.push({
+                        message: 'Löschen erfolgreich',
+                        timestamp: Date.now(),
+                        status: 'success'
+                    });
                 });
             };
             init();

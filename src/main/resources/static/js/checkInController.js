@@ -26,7 +26,11 @@
                     var from = durationFactory.convertToDateObject($scope.day, $scope.from);
                     var to = durationFactory.convertToDateObject($scope.day, $scope.to);
                     durationFactory.update(from, to, lastDuration.id, function () {
-                        $rootScope.notifications.push({message: 'Checkout erfolgreich.', timestamp: Date.now(), status: 'success'});
+                        $rootScope.notifications.push({
+                            message: 'Checkout erfolgreich.',
+                            timestamp: Date.now(),
+                            status: 'success'
+                        });
                         $location.path('/');
                     });
 
@@ -36,7 +40,11 @@
             $scope.checkIn = function () {
                 var from = durationFactory.convertToDateObject($scope.day, $scope.from);
                 durationFactory.create(from, null, function () {
-                    $rootScope.notifications.push({message: 'Checkin erfolgreich.', timestamp: Date.now(), status: 'success'});
+                    $rootScope.notifications.push({
+                        message: 'Checkin erfolgreich.',
+                        timestamp: Date.now(),
+                        status: 'success'
+                    });
                     $location.path('/');
                 });
             };

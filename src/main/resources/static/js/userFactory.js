@@ -19,10 +19,10 @@
             $http.get('/users').success(success);
         };
         factory.createUser = function (user, success) {
-          $http.post('/users', user).success(success);
+            $http.post('/users', user).success(success);
         }
         factory.changePassword = function (username, newPassword, success) {
-          $http.post('/users/' + username + '/changepassword', newPassword).success(success);
+            $http.post('/users/' + username + '/changepassword', newPassword).success(success);
         }
         return factory;
     }]);

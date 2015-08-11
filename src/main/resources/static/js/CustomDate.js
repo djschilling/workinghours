@@ -1,9 +1,9 @@
 var CustomDate = function (date) {
-    if(date){
-      this.date = date;
+    if (date) {
+        this.date = date;
     }
     else {
-      this.date = new Date();
+        this.date = new Date();
     }
 };
 
