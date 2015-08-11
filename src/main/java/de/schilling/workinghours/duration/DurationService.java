@@ -1,6 +1,8 @@
 package de.schilling.workinghours.duration;
 
 import java.util.List;
+
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
@@ -69,4 +71,13 @@ public interface DurationService {
      * @return the {@link de.schilling.workinghours.duration.Duration} for the given id.
      */
     Duration get(Long id);
+
+    /**
+     * Deletes the {@link Duration} matching the given id.
+     *
+     * @param id the {@link Duration}s id.
+     *
+     * @throws AccessDeniedException when the requesting user is not the owner of the {@link Duration}.
+     */
+    void delete(Long id);
 }

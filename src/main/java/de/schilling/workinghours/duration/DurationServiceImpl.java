@@ -91,6 +91,18 @@ public class DurationServiceImpl implements DurationService {
         return duration;
     }
 
+    @Override
+    public void delete(Long id) {
+        Duration one = durationRepository.findById(id);
+
+        User user = userService.getCurrentlyLoggedIn();
+
+        if(!one.getUsername().equals(user.getUsername())) {
+            throw new AccessDeniedException("Access denied for user " + user.getUsername() + " for duration with id " + id);
+        }
+        durationRepository.delete(id);
+    }
+
     private LocalDateTime calculateStartOfMonth(Integer year, Integer month) {
         LocalDateTime startOfMonth;
         if(year != null && month != null) {

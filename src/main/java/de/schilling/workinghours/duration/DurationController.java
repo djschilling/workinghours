@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+
 /**
  * David Schilling - davejs92@gmail.com
  */
@@ -63,5 +65,10 @@ public class DurationController {
     @RequestMapping(value = "durations/{id}", method = RequestMethod.GET)
     public Duration get(@PathVariable Long id) {
         return durationService.get(id);
+    }
+
+    @RequestMapping(value = "durations/{id}", method = DELETE)
+    public void delete(@PathVariable Long id) {
+        durationService.delete(id);
     }
 }
