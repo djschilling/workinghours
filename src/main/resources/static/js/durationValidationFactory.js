@@ -12,12 +12,12 @@
         var factory = {};
 
         factory.isValidTime = function (time) {
-            var timeRegex = /\d\d:\d\d/;
+            var timeRegex = /^\d\d:\d\d$/;
             return !!timeRegex.test(time);
         };
 
         factory.isValidDay = function (day) {
-            var dayRegex = /\d\d-\d\d-\d\d\d\d/;
+            var dayRegex = /^\d\d-\d\d-\d\d\d\d$/;
             return !!dayRegex.test(day);
         };
 
