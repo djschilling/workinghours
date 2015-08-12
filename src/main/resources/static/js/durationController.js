@@ -8,8 +8,8 @@
         controllersModul = angular.module('dcc.controller', []);
     }
 
-    controllersModul.controller('DurationController', ['$scope', 'durationFactory', '$rootScope', '$location', '$routeParams',
-        function ($scope, durationFactory, $rootScope, $location, $routeParams) {
+    controllersModul.controller('DurationController', ['$scope', 'durationFactory', '$rootScope', '$location', '$routeParams', 'durationValidationFactory',
+        function ($scope, durationFactory, $rootScope, $location, $routeParams, durationValidationFactory) {
 
             if ($routeParams.id) {
                 $scope.update = true;
@@ -32,6 +32,22 @@
             }
             $scope.submit = function () {
 
+                if(!durationValidationFactory.isValidDay($scope.day)){
+                    $rootScope.notifications.push({
+                        message: 'Tag muss in folgendem Format sein: DD-MM-YYY',
+                        timestamp: Date.now(),
+                        status: 'danger'
+                    });
+                    return;
+                }
+                if (!durationValidationFactory.isValidTime($scope.from) || !durationValidationFactory.isValidTime($scope.to)){
+                    $rootScope.notifications.push({
+                        message: 'Von und Bis muss in folgendem Format sein: HH-MM',
+                        timestamp: Date.now(),
+                        status: 'danger'
+                    });
+                    return;
+                }
                 var from = durationFactory.convertToDateObject($scope.day, $scope.from);
                 var to = durationFactory.convertToDateObject($scope.day, $scope.to);
 
