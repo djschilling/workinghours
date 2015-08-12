@@ -22,11 +22,10 @@ public class DurationValidationServiceImpl implements DurationValidationService 
     @Override
     public boolean validateNewDuration(Duration duration) {
 
-        List<Duration> durationList = durationRepository.findByUsernameAndStartTimeBetweenOrderByStartTimeDesc
-                (duration.getUsername(), LocalDateTime.of(2000, 1, 1, 1, 1), LocalDateTime.of(2100, 1, 1, 1, 1));
+        List<Duration> durationList = durationRepository.findByUsernameOrderByStartTimeDesc(duration.getUsername());
         for (Duration currentDuration : durationList) {
             if (currentDuration.getEndTime() == null) {
-                if (!currentDuration.getStartTime().isAfter(duration.getEndTime()) &&
+                if (!isAfterFirstOrEqual(currentDuration.getStartTime(), duration.getEndTime()) &&
                         !currentDuration.getStartTime().isBefore(duration.getStartTime())) {
                     return false;
                 }
@@ -37,7 +36,7 @@ public class DurationValidationServiceImpl implements DurationValidationService 
                         return false;
                     }
                 } else {
-                    if (!currentDuration.getStartTime().isAfter(duration.getEndTime()) &&
+                    if (!isAfterFirstOrEqual(currentDuration.getStartTime(), duration.getEndTime()) &&
                             !currentDuration.getEndTime().isBefore(duration.getStartTime())) {
                         return false;
                     }
@@ -46,5 +45,9 @@ public class DurationValidationServiceImpl implements DurationValidationService 
         }
 
         return true;
+    }
+
+    private boolean isAfterFirstOrEqual(LocalDateTime first, LocalDateTime second) {
+        return second.isAfter(first) || second.isEqual(first);
     }
 }

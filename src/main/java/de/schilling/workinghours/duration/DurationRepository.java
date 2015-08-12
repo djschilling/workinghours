@@ -11,6 +11,8 @@ public interface DurationRepository extends JpaRepository<Duration, Long>{
 
     List<Duration> findByUsernameAndStartTimeBetweenOrderByStartTimeDesc(String username, LocalDateTime start, LocalDateTime end);
 
+    List<Duration> findByUsernameOrderByStartTimeDesc(String username);
+
     List<Duration> findByStartTimeBetweenOrderByStartTimeDesc(LocalDateTime start, LocalDateTime end);
 
     Duration findById(Long id);
