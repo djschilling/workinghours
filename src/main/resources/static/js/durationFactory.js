@@ -48,8 +48,8 @@
             });
         };
 
-        factory.update = function (from, to, id, success) {
-            $http.put('/durations/' + id, {startTime: from, endTime: to}).success(success);
+        factory.update = function (from, to, id, success, error) {
+            $http.put('/durations/' + id, {startTime: from, endTime: to}).success(success).error(error);
 
         };
         factory.getForCurrentMonth = function (success) {

@@ -38,7 +38,8 @@ public class DurationValidationServiceImplTest {
 
         Duration existingDuration = new Duration(now.minusHours(2), now.minusHours(1), USERNAME);
         Duration newDuration = new Duration(now.minusHours(1), now, USERNAME);
-
+        existingDuration.setId(1l);
+        newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
         boolean isValid = sut.validateNewDuration(newDuration);
@@ -52,7 +53,8 @@ public class DurationValidationServiceImplTest {
 
         Duration existingDuration = new Duration(now.minusHours(2), now.minusHours(1), USERNAME);
         Duration newDuration = new Duration(now.minusHours(1).plusMinutes(1), now, USERNAME);
-
+        existingDuration.setId(1l);
+        newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
         boolean isValid = sut.validateNewDuration(newDuration);
@@ -66,7 +68,8 @@ public class DurationValidationServiceImplTest {
 
         Duration existingDuration = new Duration(now.minusHours(2), now.minusHours(1), USERNAME);
         Duration newDuration = new Duration(now.minusHours(3), now.minusHours(2).minusMinutes(1), USERNAME);
-
+        existingDuration.setId(1l);
+        newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
         boolean isValid = sut.validateNewDuration(newDuration);
@@ -80,7 +83,8 @@ public class DurationValidationServiceImplTest {
 
         Duration existingDuration = new Duration(now.minusHours(2), now.minusHours(1), USERNAME);
         Duration newDuration = new Duration(now.minusHours(3), now.minusHours(2), USERNAME);
-
+        existingDuration.setId(1l);
+        newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
         boolean isValid = sut.validateNewDuration(newDuration);
@@ -94,7 +98,8 @@ public class DurationValidationServiceImplTest {
 
         Duration existingDuration = new Duration(now.minusHours(2), now.plusHours(2), USERNAME);
         Duration newDuration = new Duration(now.minusHours(1), now.plusHours(1), USERNAME);
-
+        existingDuration.setId(1l);
+        newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
         boolean isValid = sut.validateNewDuration(newDuration);
@@ -108,7 +113,8 @@ public class DurationValidationServiceImplTest {
 
         Duration existingDuration = new Duration(now.minusHours(2), now.plusHours(2), USERNAME);
         Duration newDuration = new Duration(now.minusHours(3), now.minusHours(1), USERNAME);
-
+        existingDuration.setId(1l);
+        newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
         boolean isValid = sut.validateNewDuration(newDuration);
@@ -122,7 +128,8 @@ public class DurationValidationServiceImplTest {
 
         Duration existingDuration = new Duration(now.minusHours(2), now.plusHours(2), USERNAME);
         Duration newDuration = new Duration(now.plusHours(1), now.plusHours(3), USERNAME);
-
+        existingDuration.setId(1l);
+        newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
         boolean isValid = sut.validateNewDuration(newDuration);

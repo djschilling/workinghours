@@ -75,7 +75,7 @@
                     });
                 };
                 if ($scope.update) {
-                    durationFactory.update(from, to, $routeParams.id, success);
+                    durationFactory.update(from, to, $routeParams.id, success, error);
                 } else {
                     durationFactory.create(from, to, success, error);
                 }

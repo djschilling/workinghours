@@ -29,21 +29,23 @@ public class DurationValidationServiceImpl implements DurationValidationService 
         }
         List<Duration> durationList = durationRepository.findByUsernameOrderByStartTimeDesc(duration.getUsername());
         for (Duration currentDuration : durationList) {
-            if (currentDuration.getEndTime() == null) {
-                if (!isAfterFirstOrEqual(currentDuration.getStartTime(), duration.getEndTime()) &&
-                        !currentDuration.getStartTime().isBefore(duration.getStartTime())) {
-                    return false;
-                }
-            } else {
-                if (duration.getEndTime() == null) {
-                    if (duration.getStartTime().isBefore(currentDuration.getEndTime()) &&
-                            !duration.getStartTime().isBefore(currentDuration.getStartTime())) {
+            if(currentDuration.getId() != duration.getId()) {
+                if (currentDuration.getEndTime() == null) {
+                    if (!isAfterFirstOrEqual(currentDuration.getStartTime(), duration.getEndTime()) &&
+                            !currentDuration.getStartTime().isBefore(duration.getStartTime())) {
                         return false;
                     }
                 } else {
-                    if (!isAfterFirstOrEqual(currentDuration.getEndTime(), duration.getStartTime()) &&
-                            isAfterFirstOrEqual(currentDuration.getStartTime(), duration.getEndTime())) {
-                        return false;
+                    if (duration.getEndTime() == null) {
+                        if (duration.getStartTime().isBefore(currentDuration.getEndTime()) &&
+                                !duration.getStartTime().isBefore(currentDuration.getStartTime())) {
+                            return false;
+                        }
+                    } else {
+                        if (!isAfterFirstOrEqual(currentDuration.getEndTime(), duration.getStartTime()) &&
+                                isAfterFirstOrEqual(currentDuration.getStartTime(), duration.getEndTime())) {
+                            return false;
+                        }
                     }
                 }
             }

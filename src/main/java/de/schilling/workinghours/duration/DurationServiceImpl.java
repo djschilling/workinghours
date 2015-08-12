@@ -74,6 +74,9 @@ public class DurationServiceImpl implements DurationService {
         Duration previous = durationRepository.getOne(id);
         duration.setUsername(previous.getUsername());
         duration.setId(id);
+        if (!durationValidationService.validateNewDuration(duration)) {
+            throw new InvalidDurationException("Duration collidates with other duration.");
+        }
 
         User user = userService.getCurrentlyLoggedIn();
         if (!user.getAuthorities().contains("ROLE_ADMIN") && !user.getUsername().equals(duration.getUsername())) {
