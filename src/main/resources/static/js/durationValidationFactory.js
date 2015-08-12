@@ -21,6 +21,10 @@
             return !!dayRegex.test(day);
         };
 
+        factory.isToAfterFrom = function (day, to, from) {
+            return Date.parse(day + ' ' +  to) > Date.parse(day + ' ' +  from);
+        };
+
         return factory;
     }]);
 }());

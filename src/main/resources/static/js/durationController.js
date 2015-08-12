@@ -48,6 +48,14 @@
                     });
                     return;
                 }
+                if(!durationValidationFactory.isToAfterFrom($scope.day, $scope.to, $scope.from)){
+                    $rootScope.notifications.push({
+                        message: "'Bis' muss nach 'Von' sein",
+                        timestamp: Date.now(),
+                        status: 'danger'
+                    });
+                    return;
+                }
                 var from = durationFactory.convertToDateObject($scope.day, $scope.from);
                 var to = durationFactory.convertToDateObject($scope.day, $scope.to);
 
