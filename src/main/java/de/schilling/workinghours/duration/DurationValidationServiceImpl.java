@@ -31,13 +31,13 @@ public class DurationValidationServiceImpl implements DurationValidationService 
                 }
             } else {
                 if (duration.getEndTime() == null) {
-                    if (!duration.getStartTime().isAfter(currentDuration.getEndTime()) &&
+                    if (duration.getStartTime().isBefore(currentDuration.getEndTime()) &&
                             !duration.getStartTime().isBefore(currentDuration.getStartTime())) {
                         return false;
                     }
                 } else {
-                    if (!isAfterFirstOrEqual(currentDuration.getStartTime(), duration.getEndTime()) &&
-                            !currentDuration.getEndTime().isBefore(duration.getStartTime())) {
+                    if (!isAfterFirstOrEqual(currentDuration.getEndTime(), duration.getStartTime()) &&
+                            isAfterFirstOrEqual(currentDuration.getStartTime(), duration.getEndTime())) {
                         return false;
                     }
                 }
