@@ -27,29 +27,28 @@ public class DurationValidationServiceImpl implements DurationValidationService 
         if(duration.getStartTime() == null) {
             return false;
         }
-        boolean foundInvalidCombination = false;
         List<Duration> durationList = durationRepository.findByUsernameOrderByStartTimeDesc(duration.getUsername());
         for (Duration currentDuration : durationList) {
             if (currentDuration.getEndTime() == null) {
                 if (!isAfterFirstOrEqual(currentDuration.getStartTime(), duration.getEndTime()) &&
                         !currentDuration.getStartTime().isBefore(duration.getStartTime())) {
-                    foundInvalidCombination = true;
+                    return false;
                 }
             } else {
                 if (duration.getEndTime() == null) {
                     if (duration.getStartTime().isBefore(currentDuration.getEndTime()) &&
                             !duration.getStartTime().isBefore(currentDuration.getStartTime())) {
-                        foundInvalidCombination = true;
+                        return false;
                     }
                 } else {
                     if (!isAfterFirstOrEqual(currentDuration.getEndTime(), duration.getStartTime()) &&
                             isAfterFirstOrEqual(currentDuration.getStartTime(), duration.getEndTime())) {
-                        foundInvalidCombination = true;
+                        return false;
                     }
                 }
             }
         }
-        return !foundInvalidCombination;
+        return true;
     }
 
     private boolean isAfterFirstOrEqual(LocalDateTime first, LocalDateTime second) {
