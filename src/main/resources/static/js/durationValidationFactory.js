@@ -22,6 +22,7 @@
         };
 
         factory.isToAfterFrom = function (day, to, from) {
+            day = day.replace("-", "/").replace("-", "/");
             return Date.parse(day + ' ' +  to) > Date.parse(day + ' ' +  from);
         };
 
