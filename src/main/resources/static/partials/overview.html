@@ -1,7 +1,7 @@
 <div>
     <a class="btn btn-{{status}}" href="#checkin">{{buttonText}}</a>
 </div>
-<h2>Aktueller Monat</h2>
+<h2>{{currentMonth | month}} {{currentYear}}</h2>
 <h3>Gesamt</h3>
 {{sum | duration}}
 

@@ -20,6 +20,9 @@
                         $scope.status = 'warning';
                         $scope.buttonText = 'Zeitmessung starten';
                     }
+                    var currentDate = new Date(Date.now());
+                    $scope.currentMonth = currentDate.getMonth() + 1;
+                    $scope.currentYear =  currentDate.getFullYear();
 
                 });
                 durationFactory.getSum(function (sum) {
