@@ -2,6 +2,8 @@ package de.schilling.workinghours.checkin;
 
 import de.schilling.workinghours.duration.Duration;
 import de.schilling.workinghours.duration.DurationService;
+import de.schilling.workinghours.user.User;
+import de.schilling.workinghours.user.UserService;
 import java.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.access.AccessDeniedException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -27,15 +30,28 @@ public class CheckInServiceImplTest {
     private CheckInRepository checkInRepositoryMock;
     @Mock
     private DurationService durationServiceMock;
+    @Mock
+    private UserService userServiceMock;
+    private User user;
 
     @Before
     public void setUp() {
-        sut = new CheckInServiceImpl(checkInRepositoryMock, durationServiceMock);
+        sut = new CheckInServiceImpl(checkInRepositoryMock, durationServiceMock, userServiceMock);
+        user = new User("foo", "bar", "user");
+    }
+
+    @Test(expected = AccessDeniedException.class)
+    public void getAccessDenied() {
+
+        when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(user);
+
+        sut.get("bar");
     }
 
     @Test(expected = CheckInServiceException.class)
     public void getNotFound() {
 
+        when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(user);
         when(checkInRepositoryMock.findByUsername("foo")).thenReturn(null);
 
         sut.get("foo");
@@ -46,7 +62,7 @@ public class CheckInServiceImplTest {
 
         CheckIn checkIn = new CheckIn(LocalDateTime.now(), "foo");
         when(checkInRepositoryMock.findByUsername("foo")).thenReturn(checkIn);
-
+        when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(user);
         CheckIn result = sut.get("foo");
 
         assertThat(result, is(checkIn));
@@ -54,12 +70,19 @@ public class CheckInServiceImplTest {
 
     @Test
     public void checkIn() {
-
+        when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(user);
         CheckIn checkIn = new CheckIn(LocalDateTime.now(), "foo");
         sut.checkIn(checkIn);
 
         verify(checkInRepositoryMock).save(checkIn);
+    }
 
+    @Test(expected = AccessDeniedException.class)
+    public void checkInAccessDenied() {
+        when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(user);
+        CheckIn checkIn = new CheckIn(LocalDateTime.now(), "bar");
+
+        sut.checkIn(checkIn);
     }
 
     @Test
@@ -69,6 +92,7 @@ public class CheckInServiceImplTest {
 
         ArgumentCaptor<Duration> captor = ArgumentCaptor.forClass(Duration.class);
 
+        when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(user);
         when(checkInRepositoryMock.findByUsername("foo")).thenReturn(checkIn);
         sut.checkOut(new CheckOut("foo", endTime));
 
@@ -82,5 +106,11 @@ public class CheckInServiceImplTest {
         verify(checkInRepositoryMock).delete(checkIn);
     }
 
+    @Test(expected = AccessDeniedException.class)
+    public void checkOutAccessDenied() {
 
+        when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(user);
+
+        sut.checkOut(new CheckOut("bar", null));
+    }
 }
