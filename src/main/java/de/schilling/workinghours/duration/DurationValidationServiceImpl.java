@@ -29,7 +29,7 @@ public class DurationValidationServiceImpl implements DurationValidationService 
         }
         List<Duration> durationList = durationRepository.findByUsernameOrderByStartTimeDesc(duration.getUsername());
         for (Duration currentDuration : durationList) {
-            if(currentDuration.getId() != duration.getId()) {
+            if(!currentDuration.getId().equals(duration.getId())) {
                 if (currentDuration.getEndTime() == null) {
                     if (!isAfterFirstOrEqual(currentDuration.getStartTime(), duration.getEndTime()) &&
                             !currentDuration.getStartTime().isBefore(duration.getStartTime())) {

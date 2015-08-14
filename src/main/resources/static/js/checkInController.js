@@ -23,9 +23,9 @@
                     $scope.from = now.getHours() + ":" + now.getMinutes();
                 }
                 $scope.checkOut = function () {
-                    var from = durationFactory.convertToDateArray($scope.day, $scope.from);
-                    var to = durationFactory.convertToDateArray($scope.day, $scope.to);
-                    if (!durationValidationFactory.isValidTime($scope.from) || !durationValidationFactory.isValidTime($scope.to)){
+                    var from = durationFactory.convertToDateArray(durationFactory.convertToDateObject($scope.day, $scope.from));
+                    var to = durationFactory.convertToDateArray(durationFactory.convertToDateObject($scope.day, $scope.to));
+                    if (!durationValidationFactory.isValidTime($scope.from) || !durationValidationFactory.isValidTime($scope.to)) {
                         $rootScope.notifications.push({
                             message: 'Von und Bis muss in folgendem Format sein: HH-MM',
                             timestamp: Date.now(),
@@ -41,20 +41,26 @@
                             status: 'success'
                         });
                         $location.path('/');
+                    }, function () {
+                        $rootScope.notifications.push({
+                            message: 'Checkin felgeschlagen.',
+                            timestamp: Date.now(),
+                            status: 'danger'
+                        });
                     });
 
                 };
             });
 
             $scope.checkIn = function () {
-                if(!durationValidationFactory.isValidTime($scope.from)){
+                if (!durationValidationFactory.isValidTime($scope.from)) {
                     $rootScope.notifications.push({
                         message: 'Von muss in folgendem Format sein: HH-MM',
                         timestamp: Date.now(),
                         status: 'danger'
                     });
                 }
-                var from = durationFactory.convertToDateArray($scope.day, $scope.from);
+                var from = durationFactory.convertToDateArray(durationFactory.convertToDateObject($scope.day, $scope.from));
                 durationFactory.create(from, null, function () {
                     $rootScope.notifications.push({
                         message: 'Checkin erfolgreich.',
@@ -62,6 +68,12 @@
                         status: 'success'
                     });
                     $location.path('/');
+                }, function errorCreateCheckIn() {
+                    $rootScope.notifications.push({
+                        message: 'Checkin felgeschlagen.',
+                        timestamp: Date.now(),
+                        status: 'danger'
+                    });
                 });
             };
         }]);
