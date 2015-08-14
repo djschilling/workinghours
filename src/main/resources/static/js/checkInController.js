@@ -23,8 +23,8 @@
                     $scope.from = now.getHours() + ":" + now.getMinutes();
                 }
                 $scope.checkOut = function () {
-                    var from = durationFactory.convertToDateObject($scope.day, $scope.from);
-                    var to = durationFactory.convertToDateObject($scope.day, $scope.to);
+                    var from = durationFactory.convertToDateArray($scope.day, $scope.from);
+                    var to = durationFactory.convertToDateArray($scope.day, $scope.to);
                     if (!durationValidationFactory.isValidTime($scope.from) || !durationValidationFactory.isValidTime($scope.to)){
                         $rootScope.notifications.push({
                             message: 'Von und Bis muss in folgendem Format sein: HH-MM',
@@ -54,7 +54,7 @@
                         status: 'danger'
                     });
                 }
-                var from = durationFactory.convertToDateObject($scope.day, $scope.from);
+                var from = durationFactory.convertToDateArray($scope.day, $scope.from);
                 durationFactory.create(from, null, function () {
                     $rootScope.notifications.push({
                         message: 'Checkin erfolgreich.',

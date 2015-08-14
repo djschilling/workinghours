@@ -21,9 +21,8 @@
             return !!dayRegex.test(day);
         };
 
-        factory.isToAfterFrom = function (day, to, from) {
-            day = day.replace("-", "/").replace("-", "/");
-            return Date.parse(day + ' ' +  to) > Date.parse(day + ' ' +  from);
+        factory.isToAfterFrom = function (to, from) {
+            return to.getTime() > from.getTime();
         };
 
         return factory;

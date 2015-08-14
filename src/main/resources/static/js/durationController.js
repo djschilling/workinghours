@@ -48,7 +48,9 @@
                     });
                     return;
                 }
-                if(!durationValidationFactory.isToAfterFrom($scope.day, $scope.to, $scope.from)){
+                var dateFrom = durationFactory.convertToDateObject($scope.day, $scope.from);
+                var dateTo = durationFactory.convertToDateObject($scope.day, $scope.to);
+                if(!durationValidationFactory.isToAfterFrom(dateTo, dateFrom)) {
                     $rootScope.notifications.push({
                         message: "'Bis' muss nach 'Von' sein",
                         timestamp: Date.now(),
@@ -56,8 +58,8 @@
                     });
                     return;
                 }
-                var from = durationFactory.convertToDateObject($scope.day, $scope.from);
-                var to = durationFactory.convertToDateObject($scope.day, $scope.to);
+                var from = durationFactory.convertToDateArray($scope.day, $scope.from);
+                var to = durationFactory.convertToDateArray($scope.day, $scope.to);
 
                 var success = function () {
                     $rootScope.notifications.push({
