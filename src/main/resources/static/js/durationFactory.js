@@ -61,8 +61,8 @@
             userFactory.getCurrentUser(function (user) {
                 $http.get('/durations', {params: {username: user.username}}).success(function (durations) {
                     durations.forEach(function (duration) {
-                        duration.startTime = convertDateArrayToObject(duration.startTime);
-                        duration.endTime = convertDateArrayToObject(duration.endTime);
+                        duration.startTime = DateHelper.convertDateArrayToObject(duration.startTime);
+                        duration.endTime = DateHelper.convertDateArrayToObject(duration.endTime);
                     });
                     success(durations);
                 });
@@ -71,8 +71,8 @@
         factory.getById = function (id, success) {
             userFactory.getCurrentUser(function () {
                 $http.get('/durations/' + id).success(function (duration) {
-                    duration.startTime = convertDateArrayToObject(duration.startTime);
-                    duration.endTime = convertDateArrayToObject(duration.endTime);
+                    duration.startTime = DateHelper.convertDateArrayToObject(duration.startTime);
+                    duration.endTime = DateHelper.convertDateArrayToObject(duration.endTime);
                     success(duration);
                 });
             });
