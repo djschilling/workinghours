@@ -19,9 +19,9 @@
 
         }
 
-        factory.getSum = function (success) {
+        factory.getSum = function (year, month, success) {
             userFactory.getCurrentUser(function (user) {
-                $http.get('/durations/sum', {params: {username: user.username}}).success(success);
+                $http.get('/durations/sum', {params: {username: user.username, year: year, month: month}}).success(success);
             });
         };
         factory.getSumForUser = function (username, success) {
@@ -52,6 +52,17 @@
             $http.put('/durations/' + id, {startTime: from, endTime: to}).success(success).error(error);
 
         };
+        factory.get = function (year, month, success) {
+            userFactory.getCurrentUser(function (user) {
+                $http.get('/durations', {params: {username: user.username, year: year, month: month}}).success(function (durations) {
+                    durations.forEach(function (duration) {
+                        duration.startTime = convertDateArrayToObject(duration.startTime);
+                        duration.endTime = convertDateArrayToObject(duration.endTime);
+                    });
+                    success(durations);
+                });
+            });
+        };
         factory.getForCurrentMonth = function (success) {
             userFactory.getCurrentUser(function (user) {
                 $http.get('/durations', {params: {username: user.username}}).success(function (durations) {
@@ -64,7 +75,7 @@
             });
         };
         factory.getById = function (id, success) {
-            userFactory.getCurrentUser(function (user) {
+            userFactory.getCurrentUser(function () {
                 $http.get('/durations/' + id).success(function (duration) {
                     duration.startTime = convertDateArrayToObject(duration.startTime);
                     duration.endTime = convertDateArrayToObject(duration.endTime);
