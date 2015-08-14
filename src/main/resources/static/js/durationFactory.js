@@ -8,16 +8,10 @@
         factoriesModul = angular.module('dcc.factories', []);
     }
 
-    factoriesModul.factory('durationFactory', ['$http', 'userFactory', function ($http, userFactory) {
+    factoriesModul.factory('durationFactory', ['$http', 'userFactory', 'DateHelper', function ($http, userFactory, DateHelper) {
         var factory = {};
 
-        function convertDateArrayToObject(dateArray) {
-            if (dateArray) {
-                return new CustomDate(new Date(dateArray[0], dateArray[1] - 1, dateArray[2], dateArray[3], dateArray[4], 0, 0));
-            }
-            return null;
 
-        }
 
         factory.getSum = function (year, month, success) {
             userFactory.getCurrentUser(function (user) {
@@ -56,8 +50,8 @@
             userFactory.getCurrentUser(function (user) {
                 $http.get('/durations', {params: {username: user.username, year: year, month: month}}).success(function (durations) {
                     durations.forEach(function (duration) {
-                        duration.startTime = convertDateArrayToObject(duration.startTime);
-                        duration.endTime = convertDateArrayToObject(duration.endTime);
+                        duration.startTime = DateHelper.convertDateArrayToObject(duration.startTime);
+                        duration.endTime = DateHelper.convertDateArrayToObject(duration.endTime);
                     });
                     success(durations);
                 });

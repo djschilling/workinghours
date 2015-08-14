@@ -9,20 +9,32 @@
     }
 
 
-    factoriesModul.factory('CheckInFactory', ['$http', 'durationFactory', function ($http, durationFactory) {
+    factoriesModul.factory('CheckInFactory', ['$http', 'durationFactory', 'userFactory', 'DateHelper', function ($http, durationFactory, userFactory, DateHelper) {
         var factory = {};
         factory.isCheckedIn = function (success) {
-            durationFactory.getForCurrentMonth(function (durations) {
-                if (durations.length === 0) {
+            userFactory.getCurrentUser(function (user) {
+                $http.get('/checkins/' + user.username).success(function (checkIn) {
+                    checkIn.startTime = DateHelper.convertDateArrayToObject(checkIn.startTime);
+                    success(true, checkIn);
+                }).error(function () {
                     success(false);
-                } else {
-                    var lastDuration = durations[0];
-                    if (lastDuration.endTime === null) {
-                        success(true, lastDuration);
-                    } else {
-                        success(false);
-                    }
-                }
+                })
+            });
+        };
+        factory.checkIn = function (startTime, success, error) {
+            userFactory.getCurrentUser(function (user) {
+                $http.post('/checkins', {
+                    username: user.username,
+                    startTime: startTime
+                }).success(success).error(error);
+            });
+        };
+        factory.checkOut = function (endTime, success, error) {
+            userFactory.getCurrentUser(function (user) {
+                $http.post('/checkouts', {
+                    username: user.username,
+                    endTime: endTime
+                }).success(success).error(error);
             });
         };
         return factory;

@@ -14,18 +14,17 @@
             $scope.day = now.getDay() + "-" + now.getMonth() + "-" + now.getYear();
 
 
-            CheckInFactory.isCheckedIn(function (isCheckedIn, lastDuration) {
+            CheckInFactory.isCheckedIn(function (isCheckedIn, checkIn) {
                 $scope.isCheckedIn = isCheckedIn;
                 if (isCheckedIn) {
-                    $scope.from = lastDuration.startTime.getHours() + ":" + lastDuration.startTime.getMinutes();
+                    $scope.from = checkIn.startTime.getHours() + ":" + checkIn.startTime.getMinutes();
                     $scope.to = now.getHours() + ":" + now.getMinutes();
                 } else {
                     $scope.from = now.getHours() + ":" + now.getMinutes();
                 }
                 $scope.checkOut = function () {
-                    var from = durationFactory.convertToDateArray(durationFactory.convertToDateObject($scope.day, $scope.from));
                     var to = durationFactory.convertToDateArray(durationFactory.convertToDateObject($scope.day, $scope.to));
-                    if (!durationValidationFactory.isValidTime($scope.from) || !durationValidationFactory.isValidTime($scope.to)) {
+                    if (!durationValidationFactory.isValidTime($scope.to)) {
                         $rootScope.notifications.push({
                             message: 'Von und Bis muss in folgendem Format sein: HH-MM',
                             timestamp: Date.now(),
@@ -34,16 +33,16 @@
                         return;
                     }
 
-                    durationFactory.update(from, to, lastDuration.id, function () {
+                    CheckInFactory.checkOut(to, function () {
                         $rootScope.notifications.push({
                             message: 'Checkout erfolgreich.',
                             timestamp: Date.now(),
                             status: 'success'
                         });
                         $location.path('/');
-                    }, function () {
+                    }, function (response) {
                         $rootScope.notifications.push({
-                            message: 'Checkin felgeschlagen.',
+                            message: response,
                             timestamp: Date.now(),
                             status: 'danger'
                         });
@@ -61,16 +60,16 @@
                     });
                 }
                 var from = durationFactory.convertToDateArray(durationFactory.convertToDateObject($scope.day, $scope.from));
-                durationFactory.create(from, null, function () {
+                CheckInFactory.checkIn(from, function () {
                     $rootScope.notifications.push({
                         message: 'Checkin erfolgreich.',
                         timestamp: Date.now(),
                         status: 'success'
                     });
                     $location.path('/');
-                }, function errorCreateCheckIn() {
+                }, function errorCreateCheckIn(response) {
                     $rootScope.notifications.push({
-                        message: 'Checkin felgeschlagen.',
+                        message: response,
                         timestamp: Date.now(),
                         status: 'danger'
                     });

@@ -1,5 +1,7 @@
 package de.schilling.workinghours.checkin;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,6 +27,9 @@ public class CheckIn {
     public CheckIn(LocalDateTime startTime, String username) {
         this.startTime = startTime;
         this.username = username;
+    }
+
+    public CheckIn() {
     }
 
     public Long getId() {
