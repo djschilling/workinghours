@@ -75,19 +75,19 @@
         factory.delete = function (id, success) {
             $http.delete('/durations/' + id).success(success);
         };
-        factory.convertToDateArray = function (day, time) {
+        factory.convertToDateArray = function (date) {
             var datetime = [];
-            datetime.push(parseInt(day.substr(6, 4)));
-            datetime.push(parseInt(day.substr(3, 2)));
-            datetime.push(parseInt(day.substr(0, 2)));
-            datetime.push(parseInt(time.substr(0, 2)));
-            datetime.push(parseInt(time.substr(3, 2)));
+            datetime.push(date.getFullYear());
+            datetime.push(date.getMonth() + 1);
+            datetime.push(date.getDate());
+            datetime.push(date.getHours());
+            datetime.push(date.getMinutes());
             return datetime;
         };
         factory.convertToDateObject  = function(day, time) {
             return new Date(parseInt(day.substr(6, 4)),
-                parseInt(day.substr(3, 2)) - 1,
-                parseInt(day.substr(0, 2)),
+                            parseInt(day.substr(3, 2)) - 1,
+                            parseInt(day.substr(0, 2)),
                 parseInt(time.substr(0, 2)),
                 parseInt(time.substr(3, 2)));
         };

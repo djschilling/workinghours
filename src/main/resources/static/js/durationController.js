@@ -58,8 +58,8 @@
                     });
                     return;
                 }
-                var from = durationFactory.convertToDateArray($scope.day, $scope.from);
-                var to = durationFactory.convertToDateArray($scope.day, $scope.to);
+                var from = durationFactory.convertToDateArray(dateFrom);
+                var to = durationFactory.convertToDateArray(dateTo);
 
                 var success = function () {
                     $rootScope.notifications.push({
