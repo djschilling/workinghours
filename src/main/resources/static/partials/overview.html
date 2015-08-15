@@ -13,19 +13,21 @@
 
 <table class="table table-striped">
     <thead>
-    <th>Dauer</th>
     <th>Tag</th>
     <th>Von</th>
     <th>Bis</th>
+    <th>Dauer</th>
+    <th>Typ</th>
     <th></th>
     <th></th>
     </thead>
     <tbody>
-    <tr ng-repeat="duration in durations">
-        <td>{{duration.duration | duration}}</td>
+    <tr ng-repeat="duration in durations" ng-class="duration.durationType == 'ILL' ? 'danger': (duration.durationType == 'HOLIDAY' ? 'warning': '')">
         <td>{{duration.startTime | date}}</td>
         <td>{{duration.startTime | time}}</td>
         <td>{{duration.endTime | time}}</td>
+        <td>{{duration.duration | duration}}</td>
+        <td>{{duration.durationType | durationType}}</td>
         <td><a href="#duration/{{duration.id}}">
             <button type="button" class="btn btn-info">Edit</button>
         </a></td>
