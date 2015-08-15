@@ -7,10 +7,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 
 import static de.schilling.workinghours.duration.DurationType.*;
-import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -43,7 +41,7 @@ public class DurationValidationServiceImplTest {
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
-        boolean isValid = sut.validateNewDuration(newDuration);
+        boolean isValid = sut.validateAgainstExsitingDurations(newDuration);
 
         assertThat(isValid, is(true));
     }
@@ -58,7 +56,7 @@ public class DurationValidationServiceImplTest {
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
-        boolean isValid = sut.validateNewDuration(newDuration);
+        boolean isValid = sut.validateAgainstExsitingDurations(newDuration);
 
         assertThat(isValid, is(true));
     }
@@ -73,7 +71,7 @@ public class DurationValidationServiceImplTest {
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
-        boolean isValid = sut.validateNewDuration(newDuration);
+        boolean isValid = sut.validateAgainstExsitingDurations(newDuration);
 
         assertThat(isValid, is(true));
     }
@@ -88,7 +86,7 @@ public class DurationValidationServiceImplTest {
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
-        boolean isValid = sut.validateNewDuration(newDuration);
+        boolean isValid = sut.validateAgainstExsitingDurations(newDuration);
 
         assertThat(isValid, is(false));
     }
@@ -103,7 +101,7 @@ public class DurationValidationServiceImplTest {
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
-        boolean isValid = sut.validateNewDuration(newDuration);
+        boolean isValid = sut.validateAgainstExsitingDurations(newDuration);
 
         assertThat(isValid, is(false));
     }
@@ -118,7 +116,7 @@ public class DurationValidationServiceImplTest {
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
-        boolean isValid = sut.validateNewDuration(newDuration);
+        boolean isValid = sut.validateAgainstExsitingDurations(newDuration);
 
         assertThat(isValid, is(false));
     }
@@ -133,7 +131,7 @@ public class DurationValidationServiceImplTest {
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
 
-        boolean isValid = sut.validateNewDuration(newDuration);
+        boolean isValid = sut.validateAgainstExsitingDurations(newDuration);
 
         assertThat(isValid, is(false));
     }

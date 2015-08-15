@@ -71,6 +71,7 @@ public class CheckInServiceImplTest {
     @Test
     public void checkIn() {
         when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(user);
+        when(checkInRepositoryMock.findByUsername("foo")).thenReturn(null);
         CheckIn checkIn = new CheckIn(LocalDateTime.now(), "foo");
         sut.checkIn(checkIn);
 
@@ -112,5 +113,13 @@ public class CheckInServiceImplTest {
         when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(user);
 
         sut.checkOut(new CheckOut("bar", null));
+    }
+
+    @Test(expected =  CheckInServiceException.class)
+    public void checkTwoTimesIn() {
+        CheckIn checkin = new CheckIn(LocalDateTime.now(), "foo");
+        when(checkInRepositoryMock.findByUsername("foo")).thenReturn(checkin);
+        when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(new User("foo", "foo", "USER"));
+        sut.checkIn(new CheckIn(LocalDateTime.now().plusHours(1), "foo"));
     }
 }

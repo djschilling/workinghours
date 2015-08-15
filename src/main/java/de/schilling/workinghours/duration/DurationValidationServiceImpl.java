@@ -20,13 +20,7 @@ public class DurationValidationServiceImpl implements DurationValidationService 
     }
 
     @Override
-    public boolean validateNewDuration(Duration duration) {
-        if(duration.getEndTime() != null && duration.getDuration() == 0) {
-            return false;
-        }
-        if(duration.getStartTime() == null) {
-            return false;
-        }
+    public boolean validateAgainstExsitingDurations(Duration duration) {
         List<Duration> durationList = durationRepository.findByUsernameOrderByStartTimeDesc(duration.getUsername());
         for (Duration currentDuration : durationList) {
             if(!currentDuration.getId().equals(duration.getId())) {
@@ -51,6 +45,11 @@ public class DurationValidationServiceImpl implements DurationValidationService 
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean validateDurationLenth(Duration duration) {
+        return duration.getDuration() != 0;
     }
 
     private boolean isAfterFirstOrEqual(LocalDateTime first, LocalDateTime second) {

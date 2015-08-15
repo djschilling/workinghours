@@ -62,8 +62,11 @@ public class DurationServiceImpl implements DurationService {
     public Duration create(Duration duration) {
         duration.setUsername(userService.getCurrentlyLoggedIn().getUsername());
         duration.setId(null);
-        if (!durationValidationService.validateNewDuration(duration)) {
+        if (!durationValidationService.validateAgainstExsitingDurations(duration)) {
             throw new InvalidDurationException("Duration collidates with other duration.");
+        }
+        if(!durationValidationService.validateDurationLenth(duration)) {
+            throw new InvalidDurationException("Duration lenth is zero");
         }
         return durationRepository.save(duration);
     }
@@ -74,8 +77,11 @@ public class DurationServiceImpl implements DurationService {
         Duration previous = durationRepository.getOne(id);
         duration.setUsername(previous.getUsername());
         duration.setId(id);
-        if (!durationValidationService.validateNewDuration(duration)) {
+        if (!durationValidationService.validateAgainstExsitingDurations(duration)) {
             throw new InvalidDurationException("Duration collidates with other duration.");
+        }
+        if(!durationValidationService.validateDurationLenth(duration)) {
+            throw new InvalidDurationException("Duration lenth is zero");
         }
 
         User user = userService.getCurrentlyLoggedIn();

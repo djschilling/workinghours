@@ -5,5 +5,6 @@ package de.schilling.workinghours.duration;
  */
 public interface DurationValidationService {
 
-    boolean validateNewDuration(Duration duration);
+    boolean validateAgainstExsitingDurations(Duration duration);
+    boolean validateDurationLenth(Duration duration);
 }

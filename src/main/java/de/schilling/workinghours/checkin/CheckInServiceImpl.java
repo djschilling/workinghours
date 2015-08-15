@@ -53,6 +53,9 @@ public class CheckInServiceImpl implements CheckInService {
         if(!user.getUsername().equals(checkIn.getUsername())) {
             throw new AccessDeniedException("Access denied for user " + user.getUsername() + " for checkins of user " + checkIn.getUsername());
         }
+        if(checkInRepository.findByUsername(user.getUsername()) != null) {
+            throw new CheckInServiceException(user.getUsername() + " is already checked in");
+        }
 
 
         checkInRepository.save(checkIn);

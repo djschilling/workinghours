@@ -5,10 +5,12 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
-    <include file="db/changelog/001-create-durations.xml"/>
-    <include file="db/changelog/002-create-user.xml"/>
-    <include file="db/changelog/003-create-check-in.xml"/>
-    <include file="db/changelog/004-add-duration-type.xml"/>
-    <include file="db/changelog/005-username-unique-constrain-checkin.xml"/>
+
+
+    <changeSet id="username unique constrain check in" author="raphaelschiling@gmail.com">
+        <addUniqueConstraint tableName="check_in" columnNames="username" constraintName="unique_username_check_in"/>
+    </changeSet>
+
+
 
 </databaseChangeLog>
