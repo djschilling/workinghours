@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static de.schilling.workinghours.duration.DurationType.WORK;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -38,9 +39,9 @@ public class DurationServiceImplTest {
     @Test
     public void testCalculateDurationSum() throws Exception {
         List<Duration> durationList = new ArrayList<>();
-        durationList.add(new Duration(LocalDateTime.now(), LocalDateTime.now().plusMinutes(7), "Pustekuchen"));
-        durationList.add(new Duration(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1), "Pustekuchen"));
-        durationList.add(new Duration(LocalDateTime.now(), LocalDateTime.now().plusMinutes(12), "Pustekuchen"));
+        durationList.add(new Duration(LocalDateTime.now(), LocalDateTime.now().plusMinutes(7), "Pustekuchen", WORK));
+        durationList.add(new Duration(LocalDateTime.now(), LocalDateTime.now().plusMinutes(1), "Pustekuchen", WORK));
+        durationList.add(new Duration(LocalDateTime.now(), LocalDateTime.now().plusMinutes(12), "Pustekuchen", WORK));
         assertThat(sut.calculateDurationSum(durationList), is(20L));
     }
 
@@ -48,7 +49,7 @@ public class DurationServiceImplTest {
     public void delete() {
 
         User user = new User("foo", "password", "USER");
-        Duration duration = new Duration(null, null, "foo");
+        Duration duration = new Duration(null, null, "foo", WORK);
 
         when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(user);
         when(durationRepositoryMock.findById(1L)).thenReturn(duration);
@@ -62,7 +63,7 @@ public class DurationServiceImplTest {
     public void deleteAccessDenied() {
 
         User user = new User("bar", "password", "USER");
-        Duration duration = new Duration(null, null, "foo");
+        Duration duration = new Duration(null, null, "foo", WORK);
 
         when(userServiceMock.getCurrentlyLoggedIn()).thenReturn(user);
         when(durationRepositoryMock.findById(1L)).thenReturn(duration);

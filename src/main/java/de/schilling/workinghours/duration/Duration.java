@@ -1,10 +1,7 @@
 package de.schilling.workinghours.duration;
 
 import java.time.LocalDateTime;
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -19,16 +16,25 @@ public class Duration {
 
     @NotNull
     private LocalDateTime startTime;
+
+    @NotNull
     private LocalDateTime endTime;
+
+    @NotNull
     private String username;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private DurationType durationType;
 
     public Duration() {
     }
 
-    public Duration(LocalDateTime startTime, LocalDateTime endTime, String username) {
+    public Duration(LocalDateTime startTime, LocalDateTime endTime, String username, DurationType durationType) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.username = username;
+        this.durationType = durationType;
     }
 
     public LocalDateTime getStartTime() {
@@ -60,5 +66,13 @@ public class Duration {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public DurationType getDurationType() {
+        return durationType;
+    }
+
+    public void setDurationType(DurationType durationType) {
+        this.durationType = durationType;
     }
 }

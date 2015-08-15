@@ -2,6 +2,7 @@ package de.schilling.workinghours.checkin;
 
 import de.schilling.workinghours.duration.Duration;
 import de.schilling.workinghours.duration.DurationService;
+import de.schilling.workinghours.duration.DurationType;
 import de.schilling.workinghours.user.User;
 import de.schilling.workinghours.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ public class CheckInServiceImpl implements CheckInService {
 
         CheckIn checkIn = get(checkOut.getUsername());
 
-        Duration duration = new Duration(checkIn.getStartTime(), checkOut.getEndTime(), checkOut.getUsername());
+        Duration duration = new Duration(checkIn.getStartTime(), checkOut.getEndTime(), checkOut.getUsername(), DurationType.WORK);
 
         durationService.create(duration);
         checkInRepository.delete(checkIn);

@@ -5,9 +5,18 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
-    <include file="db/changelog/001-create-durations.xml"/>
-    <include file="db/changelog/002-create-user.xml"/>
-    <include file="db/changelog/003-create-check-in.xml"/>
-    <include file="db/changelog/004-add-duration-type.xml"/>
+
+
+    <changeSet id="add duration type" author="raphaelschiling@gmail.com">
+        <addColumn schemaName="public"
+                   tableName="Duration">
+            <column name="duration_type" type="VARCHAR(255)" defaultValue="WORK">
+                <constraints nullable="false"/>
+            </column>
+
+        </addColumn>
+    </changeSet>
+
+
 
 </databaseChangeLog>

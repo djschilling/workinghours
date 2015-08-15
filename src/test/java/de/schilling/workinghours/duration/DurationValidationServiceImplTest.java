@@ -9,6 +9,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
+import static de.schilling.workinghours.duration.DurationType.*;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.is;
@@ -36,8 +37,8 @@ public class DurationValidationServiceImplTest {
     public void validateNewDurationStartsAtEndOfExisting() {
         LocalDateTime now = LocalDateTime.now();
 
-        Duration existingDuration = new Duration(now.minusHours(2), now.minusHours(1), USERNAME);
-        Duration newDuration = new Duration(now.minusHours(1), now, USERNAME);
+        Duration existingDuration = new Duration(now.minusHours(2), now.minusHours(1), USERNAME, WORK);
+        Duration newDuration = new Duration(now.minusHours(1), now, USERNAME, WORK);
         existingDuration.setId(1l);
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
@@ -51,8 +52,8 @@ public class DurationValidationServiceImplTest {
     public void validateNewDurationStartsAfterEndOfExisting() {
         LocalDateTime now = LocalDateTime.now();
 
-        Duration existingDuration = new Duration(now.minusHours(2), now.minusHours(1), USERNAME);
-        Duration newDuration = new Duration(now.minusHours(1).plusMinutes(1), now, USERNAME);
+        Duration existingDuration = new Duration(now.minusHours(2), now.minusHours(1), USERNAME, WORK);
+        Duration newDuration = new Duration(now.minusHours(1).plusMinutes(1), now, USERNAME, WORK);
         existingDuration.setId(1l);
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
@@ -66,8 +67,8 @@ public class DurationValidationServiceImplTest {
     public void validateNewDurationEndsBeforeStartOfExisting() {
         LocalDateTime now = LocalDateTime.now();
 
-        Duration existingDuration = new Duration(now.minusHours(2), now.minusHours(1), USERNAME);
-        Duration newDuration = new Duration(now.minusHours(3), now.minusHours(2).minusMinutes(1), USERNAME);
+        Duration existingDuration = new Duration(now.minusHours(2), now.minusHours(1), USERNAME, WORK);
+        Duration newDuration = new Duration(now.minusHours(3), now.minusHours(2).minusMinutes(1), USERNAME, WORK);
         existingDuration.setId(1l);
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
@@ -81,8 +82,8 @@ public class DurationValidationServiceImplTest {
     public void validateNewDurationEndsAtStartOfExisting() {
         LocalDateTime now = LocalDateTime.now();
 
-        Duration existingDuration = new Duration(now.minusHours(2), now.minusHours(1), USERNAME);
-        Duration newDuration = new Duration(now.minusHours(3), now.minusHours(2), USERNAME);
+        Duration existingDuration = new Duration(now.minusHours(2), now.minusHours(1), USERNAME, WORK);
+        Duration newDuration = new Duration(now.minusHours(3), now.minusHours(2), USERNAME, WORK);
         existingDuration.setId(1l);
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
@@ -96,8 +97,8 @@ public class DurationValidationServiceImplTest {
     public void validateNewDurationIsBetweenExisting() {
         LocalDateTime now = LocalDateTime.now();
 
-        Duration existingDuration = new Duration(now.minusHours(2), now.plusHours(2), USERNAME);
-        Duration newDuration = new Duration(now.minusHours(1), now.plusHours(1), USERNAME);
+        Duration existingDuration = new Duration(now.minusHours(2), now.plusHours(2), USERNAME, WORK);
+        Duration newDuration = new Duration(now.minusHours(1), now.plusHours(1), USERNAME, WORK);
         existingDuration.setId(1l);
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
@@ -111,8 +112,8 @@ public class DurationValidationServiceImplTest {
     public void validateNewDurationOverlapBeginOfExisting() {
         LocalDateTime now = LocalDateTime.now();
 
-        Duration existingDuration = new Duration(now.minusHours(2), now.plusHours(2), USERNAME);
-        Duration newDuration = new Duration(now.minusHours(3), now.minusHours(1), USERNAME);
+        Duration existingDuration = new Duration(now.minusHours(2), now.plusHours(2), USERNAME, WORK);
+        Duration newDuration = new Duration(now.minusHours(3), now.minusHours(1), USERNAME, WORK);
         existingDuration.setId(1l);
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));
@@ -126,8 +127,8 @@ public class DurationValidationServiceImplTest {
     public void validateNewDurationOverlapEndOfExisting() {
         LocalDateTime now = LocalDateTime.now();
 
-        Duration existingDuration = new Duration(now.minusHours(2), now.plusHours(2), USERNAME);
-        Duration newDuration = new Duration(now.plusHours(1), now.plusHours(3), USERNAME);
+        Duration existingDuration = new Duration(now.minusHours(2), now.plusHours(2), USERNAME, WORK);
+        Duration newDuration = new Duration(now.plusHours(1), now.plusHours(3), USERNAME, WORK);
         existingDuration.setId(1l);
         newDuration.setId(2l);
         when(durationRepositoryMock.findByUsernameOrderByStartTimeDesc(USERNAME)).thenReturn(singletonList(existingDuration));

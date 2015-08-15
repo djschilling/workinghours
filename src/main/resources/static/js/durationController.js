@@ -18,6 +18,7 @@
                     $scope.day = duration.startTime.getDay() + "-" + duration.startTime.getMonth() + "-" + duration.startTime.getYear();
                     $scope.from = duration.startTime.getHours() + ":" + duration.startTime.getMinutes();
                     $scope.to = duration.endTime.getHours() + ":" + duration.endTime.getMinutes();
+                    $scope.durationType = duration.durationType;
                 });
 
             } else {
@@ -28,7 +29,7 @@
 
                 $scope.from = now.getHours() + ":" + now.getMinutes();
                 $scope.to = now.getHours() + ":" + now.getMinutes();
-
+                $scope.durationType = 'WORK';
             }
             $scope.submit = function () {
 
@@ -77,9 +78,9 @@
                     });
                 };
                 if ($scope.update) {
-                    durationFactory.update(from, to, $routeParams.id, success, error);
+                    durationFactory.update(from, to, $scope.durationType, $routeParams.id, success, error);
                 } else {
-                    durationFactory.create(from, to, success, error);
+                    durationFactory.create(from, to, $scope.durationType, success, error);
                 }
             };
         }]);

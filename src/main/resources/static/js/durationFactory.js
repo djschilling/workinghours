@@ -32,18 +32,19 @@
             }).success(success);
         };
 
-        factory.create = function (from, to, success, error) {
+        factory.create = function (from, to, durationType, success, error) {
             userFactory.getCurrentUser(function (user) {
                 $http.post('/durations', {
                     startTime: from,
                     endTime: to,
-                    username: user.username
+                    username: user.username,
+                    durationType: durationType
                 }, {params: {username: user.username}}).success(success).error(error);
             });
         };
 
-        factory.update = function (from, to, id, success, error) {
-            $http.put('/durations/' + id, {startTime: from, endTime: to}).success(success).error(error);
+        factory.update = function (from, to, durationType, id, success, error) {
+            $http.put('/durations/' + id, {startTime: from, endTime: to, durationType: durationType}).success(success).error(error);
 
         };
         factory.get = function (year, month, success) {
