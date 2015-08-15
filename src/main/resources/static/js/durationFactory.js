@@ -44,8 +44,14 @@
         };
 
         factory.update = function (from, to, durationType, id, success, error) {
-            $http.put('/durations/' + id, {startTime: from, endTime: to, durationType: durationType}).success(success).error(error);
-
+            userFactory.getCurrentUser(function (user) {
+                $http.put('/durations/' + id, {
+                    startTime: from,
+                    endTime: to,
+                    durationType: durationType,
+                    username: user.username
+                }).success(success).error(error);
+            });
         };
         factory.get = function (year, month, success) {
             userFactory.getCurrentUser(function (user) {
